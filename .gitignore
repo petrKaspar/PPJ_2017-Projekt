@@ -1,0 +1,6 @@
+.idea
+/src/main/resources/*.properties
+/src/test/resources/*.properties
+*.log
+target
+*.iml
