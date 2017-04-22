@@ -55,12 +55,13 @@ public class CommentDaoTests {
 
         List<Comment> comments = commentDao.getComments_innerjoin();
 
-        int lastComment = comments.get(comments.size()-1).getPicture_id();
+        int lastComment = comments.get(comments.size()-1).getcomment_id();
+        System.out.println(lastComment+"aaaaaaaaaaaaaaa");
         int nLike = comments.get(comments.size()-1).getNlike();
         int nDislike = comments.get(comments.size()-1).getNdislike();
         String lastUpdate = comments.get(comments.size()-1).getLastUpdate();
 
-        commentDao.incrementNLike(lastComment);
+        System.out.println(commentDao.incrementNLike(lastComment));;
         commentDao.incrementNDislike(lastComment);
 
         Comment c = commentDao.getComment(lastComment);

@@ -1,16 +1,57 @@
 package cz.tul.data;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by Petr on 03.04.2017.
  * Urceno pro me vlastni pokusy a zkouseni, jak co funguje. Ve finalni verzi semestralky nebude.
  */
+@Transactional
 public class TestovaciDao {
 
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    public Session session() {
+        return sessionFactory.getCurrentSession();
+    }
+
+    public boolean create(Testovaci testovaci) {
+        System.out.println("-------------------------");
+        System.out.println("New ID = "+  session().save(testovaci));
+        System.out.println("-------------------------");
+        return true;
+    }
+
+    public boolean incrementNLike(int id) {
+        Testovaci testovaci = (Testovaci) session().load(Testovaci.class, id);
+        int nLike = testovaci.getPocet();
+        System.out.println("+++++++++"+nLike+"++++++++++");
+        testovaci.setPocet(nLike + 1);
+        int updatedKey = (int) session().save(testovaci);
+        System.out.println(updatedKey);
+        return true;
+    }
+/*
+    public boolean exists(String username) {
+        Criteria crit = session().createCriteria(User.class);
+        crit.add(Restrictions.idEq(username));
+        Testovaci testovaci = (Testovaci) crit.uniqueResult();
+        return testovaci != null;
+    }*/
+
+
+
+    /*
     @Autowired
     private NamedParameterJdbcOperations jdbc;
 
@@ -47,5 +88,6 @@ public class TestovaciDao {
         jdbc.getJdbcOperations().execute("DELETE FROM testovaci where id_testovaci="+id);
 //        return jdbc.update("DELETE FROM testovaci where id_testovaci=:id", params) == 1;
     }
+*/
 
 }

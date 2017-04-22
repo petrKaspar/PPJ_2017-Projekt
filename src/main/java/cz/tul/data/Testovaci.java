@@ -1,12 +1,22 @@
 package cz.tul.data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created by Petr on 03.04.2017.
  * Urceno pro me vlastni pokusy a zkouseni, jak co funguje. Ve finalni verzi semestralky nebude.
  */
+@Entity
+@Table(name = "testovaci")
 public class Testovaci {
 
+    @Id
+    @GeneratedValue
     private int id_testovaci;
+    
     private String title;
     private int pocet;
     private String name;

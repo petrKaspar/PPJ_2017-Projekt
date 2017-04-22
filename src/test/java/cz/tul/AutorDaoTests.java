@@ -29,6 +29,35 @@ public class AutorDaoTests {
 
     @Test
     public void testUsers() {
+        OffsetDateTime odt = OffsetDateTime.now();;
+
+        Autor a = new Autor("Franta hibernate", odt.toEpochSecond()+"");
+
+        List<Autor> autors = autorDao.getAllAutors();
+        int nAutors = autors.size();
+
+        int key = autorDao.create(a);
+        a.setAutor_id(key);
+        autors = autorDao.getAllAutors();
+
+        System.out.println(a.toString());
+        System.out.println(autors.get(key-1).toString());
+
+        assertEquals("Created user should be identical to retrieved user", nAutors + 1, autors.size());
+
+        Autor a1 = autorDao.getAutor(1);
+        assertEquals("Created user ID should be identical to retrieved user ID", a1.getAutor_id(), 1);
+
+//        assertEquals("Created user should be identical to retrieved user", a, autors.get(key-1));
+//        assertSame("Created user should be identical to retrieved user", a, autors.get(key-1));
+
+
+
+    }
+
+    /*
+    @Test
+    public void testUsers() {
 
         List<Autor> autors = autorDao.getAllAutors();
         int nAutors = autors.size();
@@ -53,6 +82,6 @@ public class AutorDaoTests {
 
 
     }
-
+*/
 
 }

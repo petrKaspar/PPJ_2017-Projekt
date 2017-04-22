@@ -34,7 +34,7 @@ public class TestovaciDaoTests {
 
 //        testovaciDao.deleteTestovaci(7);
 
-       Testovaci testovaci = new Testovaci("ahoj Test", 100, "Petr333");
+       Testovaci testovaci = new Testovaci("Test Hibernate", 666, "Petr666 H");
 
 //        testovaciDao.create(testovaci);
        assertTrue("Offer creation should return true", testovaciDao.create(testovaci));

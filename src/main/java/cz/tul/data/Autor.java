@@ -1,5 +1,6 @@
 package cz.tul.data;
 
+import javax.persistence.*;
 import java.security.Timestamp;
 import java.time.Instant;
 import java.util.Date;
@@ -7,8 +8,13 @@ import java.util.Date;
 /**
  * Created by Petr on 09.04.2017.
  */
+@Entity
+@Table(name = "autor")
 public class Autor {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "autor_id")
     private int autor_id;
 
     private String name;

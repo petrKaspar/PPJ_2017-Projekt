@@ -1,22 +1,37 @@
 package cz.tul.data;
 
+import javax.persistence.*;
+
 /**
  * Created by Petr on 03.04.2017.
  */
+@Entity
+@Table(name = "picture")
 public class Picture {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "picture_id")
     private int picture_id;
-    private int autor_id;
+
+//    private int autor_id;
 
     private String url;
     private String title;
     private String created;
+
+    @Column(name="lastUpdate")
     private String lastUpdate;
+
     private String tags;
 
     private int nlike;
     private int ndislike;
 
+
+    //@Column(name = "autor")
+    @OneToOne
+    @JoinColumn(name = "autor_id")
     private Autor autor;
 
     public Autor getAutor() {
@@ -38,7 +53,7 @@ public class Picture {
     }
 
     public Picture(int autor_id, String url, String title, String created) {
-        this.autor_id = autor_id;
+//        this.autor_id = autor_id;
         this.url = url;
         this.title = title;
         this.created = created;
@@ -48,9 +63,9 @@ public class Picture {
         this.picture_id = picture_id;
     }
 
-    public void setAutor_id(int autor_id) {
-        this.autor_id = autor_id;
-    }
+//    public void setAutor_id(int autor_id) {
+//        this.autor_id = autor_id;
+//    }
 
     public void setUrl(String url) {
         this.url = url;
@@ -80,9 +95,9 @@ public class Picture {
         return picture_id;
     }
 
-    public int getAutor_id() {
-        return autor_id;
-    }
+//    public int getAutor_id() {
+//        return autor_id;
+//    }
 
     public String getUrl() {
         return url;
@@ -120,7 +135,7 @@ public class Picture {
     public String toString() {
         return "Picture{" +
                 "picture_id=" + picture_id +
-                ", autor_id=" + autor_id +
+//                ", autor_id=" + autor_id +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
                 ", created='" + created + '\'' +

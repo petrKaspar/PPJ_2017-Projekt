@@ -44,7 +44,7 @@ public class PictureDaoTests {
         Autor autor = autorDao.getAutor(2);
         picture.setAutor(autor);
 
-        List<Picture> pictures = pictureDao.getPictures_innerjoin();
+        List<Picture> pictures = pictureDao.getAllPictures();
         assertEquals("Should be one offer in database.", pictures.size(), pictureDao.create(picture) - 1);
 
 //        assertTrue("Offer creation should return true", pictureDao.create(picture));
@@ -54,7 +54,7 @@ public class PictureDaoTests {
     @Test
     public void Test_addLikeDislike() {
 
-        List<Picture> pictures = pictureDao.getPictures_innerjoin();
+        List<Picture> pictures = pictureDao.getAllPictures();
 
         int lastImage = pictures.get(pictures.size()-1).getPicture_id();
         int nLike = pictures.get(pictures.size()-1).getNlike();
@@ -75,7 +75,7 @@ public class PictureDaoTests {
     @Test
     public void Test2_listOffers() {
 
-        List<Picture> pictures = pictureDao.getPictures_innerjoin();
+        List<Picture> pictures = pictureDao.getAllPictures();
         // Get the offer with ID filled in.
 //        Picture picture = pictures.get(0);
         System.out.println("pictures.size() = " + pictures.size());
@@ -85,13 +85,13 @@ public class PictureDaoTests {
         Autor autor = autorDao.getAutor(2);
         picture.setAutor(autor);
 
-        System.out.println(picture.getAutor().getAutor_id());
-        System.out.println(pictures.get(pictures.size()-1).getAutor_id());
-        System.out.println(pictures.get(pictures.size()-1).getAutor().getAutor_id());
-        System.out.println(picture.getAutor().getname());
-        System.out.println(pictures.get(pictures.size()-1).getAutor().getname());
-        System.out.println(picture.getAutor().getRegistration());
-        System.out.println(pictures.get(pictures.size()-1).getAutor().getRegistration());
+//        System.out.println(picture.getAutor().getAutor_id());
+//        System.out.println(pictures.get(pictures.size()-1).getAutor_id());
+//        System.out.println(pictures.get(pictures.size()-1).getAutor().getAutor_id());
+//        System.out.println(picture.getAutor().getname());
+//        System.out.println(pictures.get(pictures.size()-1).getAutor().getname());
+//        System.out.println(picture.getAutor().getRegistration());
+//        System.out.println(pictures.get(pictures.size()-1).getAutor().getRegistration());
 
         assertEquals("Should be one offer in database.", pictures.size(), pictures.size());
 

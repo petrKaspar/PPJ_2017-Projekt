@@ -1,11 +1,18 @@
 package cz.tul.data;
 
+import javax.persistence.*;
+
 /**
  * Created by Petr on 03.04.2017.
  */
+//@Entity
+//@Table(name = "comment")
 public class Comment {
 
+    @Id
+    @GeneratedValue
     private int comment_id;
+
     private int picture_id;
     private int autor_id;
     private int autor_comment_id;
@@ -18,7 +25,10 @@ public class Comment {
     private int nlike;
     private int ndislike;
 
+    @JoinColumn(name = "autor_id")
     private Autor autor;
+
+//    @Column(name = "picture")
     private Picture picture;
 
     public Comment(int picture_id, int autor_id, String text_comment, String title, String created) {

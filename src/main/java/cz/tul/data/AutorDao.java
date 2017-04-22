@@ -1,5 +1,9 @@
 package cz.tul.data;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -16,8 +20,42 @@ import java.util.List;
 /**
  * Created by Petr on 09.04.2017.
  */
+@Transactional
 public class AutorDao {
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    public Session session() {
+        return sessionFactory.getCurrentSession();
+    }
+
+    public int create(Autor autor) {
+        int newKey = (int) session().save(autor);
+        System.out.println("-------------------------");
+        System.out.println("New ID = "+ newKey);
+        System.out.println("-------------------------");
+        return newKey;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Autor> getAllAutors() {
+//        return session().createQuery("from autor").list();
+        Criteria crit = session().createCriteria(Autor.class);
+        return crit.list();
+    }
+
+    public Autor getAutor(int id) {
+        Criteria crit = session().createCriteria(Autor.class);
+
+//        crit.createAlias("autor", "a");
+//        crit.add(Restrictions.eq("a.enabled", true));
+        crit.add(Restrictions.idEq(id));
+
+        return (Autor) crit.uniqueResult();
+    }
+
+    /*
     @Autowired
     private NamedParameterJdbcOperations jdbc;
 
@@ -69,5 +107,5 @@ public class AutorDao {
     public void deleteAutor(int id) {
         jdbc.getJdbcOperations().execute("DELETE FROM autor where autor_id="+id);
     }
-
+*/
 }

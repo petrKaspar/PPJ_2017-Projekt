@@ -68,6 +68,7 @@ public class CommentDao {
 //                            autor.setRegistration(rs.getString("registration"));
 
                         Comment comment = new Comment();
+                        comment.setcomment_id(rs.getInt("comment_id"));
                         comment.setPicture_id(rs.getInt("picture_id"));
                         comment.setAutor_id(rs.getInt("autor_id"));
                         comment.setText_comment(rs.getString("text_comment"));

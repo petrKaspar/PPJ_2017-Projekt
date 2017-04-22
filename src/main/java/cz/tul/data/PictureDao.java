@@ -1,5 +1,9 @@
 package cz.tul.data;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.*;
@@ -19,8 +23,66 @@ import java.util.List;
 /**
  * Created by Petr on 09.04.2017.
  */
+@Transactional
 public class PictureDao {
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    public Session session() {
+        return sessionFactory.getCurrentSession();
+    }
+
+    private OffsetDateTime odt = OffsetDateTime.now();
+
+    public int create(Picture picture){
+        return (int) session().save(picture);
+    }
+
+    public boolean incrementNLike(int id) {
+        Picture picture = (Picture) session().load(Picture.class, id);
+        int nLike = picture.getNlike();
+        System.out.println("nLike = "+nLike);
+
+        picture.setNlike(nLike + 1);
+        picture.setLastUpdate(odt.toEpochSecond()+"");
+
+        int updatedKey = (int) session().save(picture);
+
+        System.out.println(updatedKey);
+        return true;
+    }
+
+    public boolean incrementNDislike(int id) {
+        Picture picture = (Picture) session().load(Picture.class, id);
+        int nDislike = picture.getNdislike();
+        System.out.println("nDislike = "+nDislike);
+
+        picture.setNdislike(nDislike + 1);
+        picture.setLastUpdate(odt.toEpochSecond()+"");
+
+        int updatedKey = (int) session().save(picture);
+
+        System.out.println(updatedKey);
+        return true;
+
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Picture> getAllPictures() {
+//        return session().createQuery("from autor").list();
+        Criteria crit = session().createCriteria(Picture.class);
+        return crit.list();
+    }
+
+    public Picture getPicture(int id) {
+        Criteria crit = session().createCriteria(Picture.class);
+        crit.add(Restrictions.idEq(id));
+
+        return (Picture) crit.uniqueResult();
+    }
+
+    /*
     @Autowired
     private NamedParameterJdbcOperations jdbc;
 
@@ -133,5 +195,5 @@ public class PictureDao {
 
                 });
     }
-
+*/
 }
