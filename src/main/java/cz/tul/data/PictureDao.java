@@ -26,6 +26,7 @@ import java.util.List;
 @Transactional
 public class PictureDao {
 
+
     @Autowired
     private SessionFactory sessionFactory;
 

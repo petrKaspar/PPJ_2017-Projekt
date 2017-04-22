@@ -5,17 +5,18 @@ import javax.persistence.*;
 /**
  * Created by Petr on 03.04.2017.
  */
-//@Entity
-//@Table(name = "comment")
+@Entity
+@Table(name = "comment")
 public class Comment {
 
     @Id
     @GeneratedValue
+    @Column(name = "comment_id")
     private int comment_id;
 
-    private int picture_id;
-    private int autor_id;
-    private int autor_comment_id;
+//    private int picture_id;
+//    private int autor_id;
+//    private int autor_comment_id;
 
     private String text_comment;
     private String title;
@@ -25,15 +26,18 @@ public class Comment {
     private int nlike;
     private int ndislike;
 
+    @ManyToOne
     @JoinColumn(name = "autor_id")
     private Autor autor;
 
 //    @Column(name = "picture")
+    @ManyToOne
+    @JoinColumn(name = "picture_id")
     private Picture picture;
 
     public Comment(int picture_id, int autor_id, String text_comment, String title, String created) {
-        this.picture_id = picture_id;
-        this.autor_id = autor_id;
+//        this.picture_id = picture_id;
+//        this.autor_id = autor_id;
         this.text_comment = text_comment;
         this.title = title;
         this.created = created;
@@ -58,13 +62,13 @@ public class Comment {
         this.comment_id = comment_id;
     }
 
-    public int getAutor_comment_id() {
-        return autor_comment_id;
-    }
-
-    public void setAutor_comment_id(int autor_comment_id) {
-        this.autor_comment_id = autor_comment_id;
-    }
+//    public int getAutor_comment_id() {
+//        return autor_comment_id;
+//    }
+//
+//    public void setAutor_comment_id(int autor_comment_id) {
+//        this.autor_comment_id = autor_comment_id;
+//    }
 
     public String getText_comment() {
         return text_comment;
@@ -114,21 +118,21 @@ public class Comment {
         this.ndislike = ndislike;
     }
 
-    public int getAutor_id() {
-        return autor_id;
-    }
+//    public int getAutor_id() {
+//        return autor_id;
+//    }
 
-    public void setAutor_id(int autor_id) {
-        this.autor_id = autor_id;
-    }
+//    public void setAutor_id(int autor_id) {
+//        this.autor_id = autor_id;
+//    }
 
-    public int getPicture_id() {
-        return picture_id;
-    }
+//    public int getPicture_id() {
+//        return picture_id;
+//    }
 
-    public void setPicture_id(int picture_id) {
-        this.picture_id = picture_id;
-    }
+//    public void setPicture_id(int picture_id) {
+//        this.picture_id = picture_id;
+//    }
 
     public Autor getAutor() {
         return autor;

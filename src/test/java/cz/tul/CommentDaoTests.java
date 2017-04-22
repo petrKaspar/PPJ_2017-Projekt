@@ -38,14 +38,16 @@ public class CommentDaoTests {
 
         OffsetDateTime odt = OffsetDateTime.now();
         //int picture_id, int autor_id, String text_comment, String title, String created
-        Comment comment = new Comment(1, 2, "text komentare", "Titulek komentare",odt.toEpochSecond()+"");
+        Comment comment = new Comment(1, 2, "Hibernate text komentare", "Titulek Hibernate",odt.toEpochSecond()+"");
         Autor autor = autorDao.getAutor(2);
-        comment.setAutor(autor);
+        Picture p3 = pictureDao.getPicture(5);
 
-        assertTrue("Offer creation should return true", commentDao.createBool(comment));
-        
-        List<Comment> comments = commentDao.getComments_innerjoin();
-        assertEquals("Should be one offer in database.", comments.size(), commentDao.create(comment) - 1);
+        comment.setAutor(autor);
+        comment.setPicture(p3);
+//        assertTrue("Offer creation should return true", commentDao.createBool(comment));
+
+        List<Comment> comments = commentDao.getAllComments();
+        assertEquals("Should be one Comment in database.", comments.size(), commentDao.create(comment) - 1);
 
 
     }
@@ -53,7 +55,7 @@ public class CommentDaoTests {
     @Test
     public void Test_addLikeDislike() {
 
-        List<Comment> comments = commentDao.getComments_innerjoin();
+        List<Comment> comments = commentDao.getAllComments();
 
         int lastComment = comments.get(comments.size()-1).getcomment_id();
         System.out.println(lastComment+"aaaaaaaaaaaaaaa");
@@ -66,9 +68,9 @@ public class CommentDaoTests {
 
         Comment c = commentDao.getComment(lastComment);
 
-        assertEquals("obr.getNlike() Should be nLike + 1.", nLike + 1, c.getNlike());
-        assertEquals("obr.getNdislike() Should be nDislike + 1.", nDislike + 1, c.getNdislike());
-        assertNotEquals("obr.getNlike() Should be nLike + 1.", lastUpdate, c.getLastUpdate());
+        assertEquals("Comment.getNlike() Should be nLike + 1.", nLike + 1, c.getNlike());
+        assertEquals("Comment.getNdislike() Should be nDislike + 1.", nDislike + 1, c.getNdislike());
+        assertNotEquals("Comment.getNlike() Should be nLike + 1.", lastUpdate, c.getLastUpdate());
 
     }
 

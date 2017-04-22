@@ -82,46 +82,30 @@ public class Main {
 
 //        TestovaciDao testovaciDao = ctx.getBean(TestovaciDao.class);
 //        testovaciDao.incrementNLike(9);
+        OffsetDateTime odt = OffsetDateTime.now();
 
         PictureDao pictureDao = ctx.getBean(PictureDao.class);
-        pictureDao.incrementNLike(5);
-
-        List<Picture> pictures = pictureDao.getAllPictures();
-
-        Picture p1 = pictures.get(5);
-        System.out.println(p1.toString());
-        System.out.println(p1.getAutor().toString());
-
-        Picture p2 = pictureDao.getPicture(6);
-        System.out.println(p2.toString());
-        System.out.println(p2.getAutor().toString());
-
-//        UsersDao usersDao = ctx.getBean(UsersDao.class);
+        AutorDao autorDao = ctx.getBean(AutorDao.class);
+        CommentDao commentDao = ctx.getBean(CommentDao.class);
+//        pictureDao.incrementNLike(5);
 //
-//        List<User> users = usersDao.getAllUsers();
-//        System.out.println("users " + users);
+//        List<Picture> pictures = pictureDao.getAllPictures();
+//
+//        Picture p1 = pictures.get(5);
+//        System.out.println(p1.toString());
+//        System.out.println(p1.getAutor().toString());
+//
+//        Picture p2 = pictureDao.getPicture(6);
+//        System.out.println(p2.toString());
+//        System.out.println(p2.getAutor().toString());
 
-//        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//       TestovaciDao testovaciDao = ctx.getBean(TestovaciDao.class);
-//       Testovaci testovaci = new Testovaci("ahoj", 7, "Petr");
-//       testovaciDao.create(testovaci);
-//       testovaciDao.incrementPpocet(5);
-//        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//        OffsetDateTime odt = OffsetDateTime.now();;
-//        PictureDao pictureDao = ctx.getBean(PictureDao.class);
-//        Picture picture = new Picture(2, "http://url.cz", "pokus 1", odt.toEpochSecond()+"");
-//        pictureDao.create(picture);
-//        pictureDao.incrementNLike(1);
-//        pictureDao.incrementNDislike(1);
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//        PictureDao pictureDao = ctx.getBean(PictureDao.class);
-//        Picture picture = pictureDao.getPicture(2);
-//        System.out.println(picture.toString());
-//        System.out.println(picture.getAutor().getname());
+        Picture p3 = pictureDao.getPicture(5);
+        Autor a1 = autorDao.getAutor(2);
 
-//        List...pictureDao.getPictures_innerjoin();
+        Comment comment = new Comment(1, 2, "Hibernate text komentare", "Titulek Hibernate",odt.toEpochSecond()+"");
+        comment.setPicture(p3);
+        comment.setAutor(a1);
+        commentDao.create(comment);
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

@@ -1,5 +1,9 @@
 package cz.tul.data;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -7,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,12 +21,66 @@ import java.util.List;
 /**
  * Created by Petr on 10.04.2017.
  */
+@Transactional
 public class CommentDao {
 
     @Autowired
-    private NamedParameterJdbcOperations jdbc;
+    private SessionFactory sessionFactory;
+
+    public Session session() {
+        return sessionFactory.getCurrentSession();
+    }
 
     private OffsetDateTime odt = OffsetDateTime.now();
+
+    public int create(Comment comment){
+        return (int) session().save(comment);
+    }
+
+    public boolean incrementNLike(int id) {
+        Comment comment = (Comment) session().load(Comment.class, id);
+        int nLike = comment.getNlike();
+        System.out.println("nLike = "+nLike);
+
+        comment.setNlike(nLike + 1);
+        comment.setLastUpdate(odt.toEpochSecond()+"");
+
+        int updatedKey = (int) session().save(comment);
+
+        System.out.println(updatedKey);
+        return true;
+    }
+
+    public boolean incrementNDislike(int id) {
+        Comment comment = (Comment) session().load(Comment.class, id);
+        int nDislike = comment.getNdislike();
+        System.out.println("nDislike = "+nDislike);
+
+        comment.setNdislike(nDislike + 1);
+        comment.setLastUpdate(odt.toEpochSecond()+"");
+
+        int updatedKey = (int) session().save(comment);
+
+        System.out.println(updatedKey);
+        return true;
+
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Comment> getAllComments() {
+//        return session().createQuery("from autor").list();
+        Criteria crit = session().createCriteria(Comment.class);
+        return crit.list();
+    }
+
+    public Comment getComment(int id) {
+        Criteria crit = session().createCriteria(Comment.class);
+        crit.add(Restrictions.idEq(id));
+
+        return (Comment) crit.uniqueResult();
+    }
+
+    /*
     public int create(Comment comment) throws SQLException {
 
         BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(comment);
@@ -137,6 +196,6 @@ public class CommentDao {
         return jdbc.update("update comment set ndislike = ndislike + 1, " +
                 "lastUpdate = :lastUpdate where comment_id=:id", params) == 1;
     }
-
+*/
 
 }

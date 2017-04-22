@@ -34,6 +34,10 @@ public class Picture {
     @JoinColumn(name = "autor_id")
     private Autor autor;
 
+//    @OneToOne
+//    @JoinColumn(name = "comment_id")
+//    private Comment comment;
+
     public Autor getAutor() {
         return autor;
     }
