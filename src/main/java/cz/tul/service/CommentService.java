@@ -1,5 +1,6 @@
-package cz.tul.data;
+package cz.tul.service;
 
+import cz.tul.data.Comment;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,7 +23,7 @@ import java.util.List;
  * Created by Petr on 10.04.2017.
  */
 @Transactional
-public class CommentDao {
+public class CommentService {
 
     @Autowired
     private SessionFactory sessionFactory;

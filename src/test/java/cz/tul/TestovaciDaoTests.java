@@ -1,17 +1,14 @@
 package cz.tul;
 
 import cz.tul.data.Testovaci;
-import cz.tul.data.TestovaciDao;
+import cz.tul.service.TestovaciService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -27,17 +24,17 @@ import static org.junit.Assert.assertTrue;
 public class TestovaciDaoTests {
 
     @Autowired
-    TestovaciDao testovaciDao;// = new TestovaciDao();
+    TestovaciService testovaciService;// = new TestovaciService();
 
     @Test
     public void testTestovaci() {
 
-//        testovaciDao.deleteTestovaci(7);
+//        testovaciService.deleteTestovaci(7);
 
        Testovaci testovaci = new Testovaci("Test Hibernate", 666, "Petr666 H");
 
-//        testovaciDao.create(testovaci);
-       assertTrue("Offer creation should return true", testovaciDao.create(testovaci));
+//        testovaciService.create(testovaci);
+       assertTrue("Offer creation should return true", testovaciService.create(testovaci));
     }
 
 }

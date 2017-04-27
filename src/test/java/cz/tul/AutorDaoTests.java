@@ -1,7 +1,7 @@
 package cz.tul;
 
 import cz.tul.data.Autor;
-import cz.tul.data.AutorDao;
+import cz.tul.service.AutorService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ public class AutorDaoTests {
 
 
     @Autowired
-    private AutorDao autorDao;
+    private AutorService autorService;
 
     @Test
     public void testUsers() {
@@ -33,19 +33,19 @@ public class AutorDaoTests {
 
         Autor a = new Autor("Franta hibernate", odt.toEpochSecond()+"");
 
-        List<Autor> autors = autorDao.getAllAutors();
+        List<Autor> autors = autorService.getAllAutors();
         int nAutors = autors.size();
 
-        int key = autorDao.create(a);
+        int key = autorService.create(a);
         a.setAutor_id(key);
-        autors = autorDao.getAllAutors();
+        autors = autorService.getAllAutors();
 
         System.out.println(a.toString());
         System.out.println(autors.get(key-1).toString());
 
         assertEquals("Created user should be identical to retrieved user", nAutors + 1, autors.size());
 
-        Autor a1 = autorDao.getAutor(1);
+        Autor a1 = autorService.getAutor(1);
         assertEquals("Created user ID should be identical to retrieved user ID", a1.getAutor_id(), 1);
 
 //        assertEquals("Created user should be identical to retrieved user", a, autors.get(key-1));
@@ -59,21 +59,21 @@ public class AutorDaoTests {
     @Test
     public void testUsers() {
 
-        List<Autor> autors = autorDao.getAllAutors();
+        List<Autor> autors = autorService.getAllAutors();
         int nAutors = autors.size();
         OffsetDateTime odt = OffsetDateTime.now();;
         Autor a = new Autor("Franta", odt.toEpochSecond()+"");
 
-        int key = autorDao.create(a);
+        int key = autorService.create(a);
         a.setAutor_id(key);
-        autors = autorDao.getAllAutors();
+        autors = autorService.getAllAutors();
 
         System.out.println(a.toString());
         System.out.println(autors.get(key-1).toString());
 
         assertEquals("Created user should be identical to retrieved user", nAutors + 1, autors.size());
 
-        Autor a1 = autorDao.getAutor(1);
+        Autor a1 = autorService.getAutor(1);
         assertEquals("Created user ID should be identical to retrieved user ID", a1.getAutor_id(), 1);
 
 //        assertEquals("Created user should be identical to retrieved user", a, autors.get(key-1));

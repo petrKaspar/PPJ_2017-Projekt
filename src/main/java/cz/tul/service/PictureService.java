@@ -1,5 +1,6 @@
-package cz.tul.data;
+package cz.tul.service;
 
+import cz.tul.data.Picture;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,7 +25,7 @@ import java.util.List;
  * Created by Petr on 09.04.2017.
  */
 @Transactional
-public class PictureDao {
+public class PictureService {
 
 
     @Autowired

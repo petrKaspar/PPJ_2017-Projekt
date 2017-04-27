@@ -1,13 +1,10 @@
-package cz.tul.data;
+package cz.tul.service;
 
-import org.hibernate.Criteria;
+import cz.tul.data.Testovaci;
+import cz.tul.repositories.TestovaciRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -15,11 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
  * Urceno pro me vlastni pokusy a zkouseni, jak co funguje. Ve finalni verzi semestralky nebude.
  */
 @Transactional
-public class TestovaciDao {
+public class TestovaciService {
 
+    private final TestovaciRepository testovaciRepository;
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    public TestovaciService(TestovaciRepository testovaciRepository) {
+        this.testovaciRepository = testovaciRepository;
+    }
 
     public Session session() {
         return sessionFactory.getCurrentSession();

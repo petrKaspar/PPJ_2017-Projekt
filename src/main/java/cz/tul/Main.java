@@ -1,7 +1,10 @@
 package cz.tul;
 
 import cz.tul.data.*;
-import cz.tul.provisioning.Provisioner;
+import cz.tul.service.AutorService;
+import cz.tul.service.CommentService;
+import cz.tul.service.PictureService;
+import cz.tul.service.TestovaciService;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -9,14 +12,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import java.time.*;
-import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
@@ -26,23 +27,23 @@ import static org.junit.Assert.assertTrue;
 public class Main {
 
     @Bean
-    public TestovaciDao testovaciDao() {
-        return new TestovaciDao();
+    public TestovaciService testovaciDao() {
+        return new TestovaciService(testovaciRepository);
     }
 
     @Bean
-    public PictureDao pictureDao() {
-        return new PictureDao();
+    public PictureService pictureDao() {
+        return new PictureService();
     }
 
     @Bean
-    public AutorDao autorDao() {
-        return new AutorDao();
+    public AutorService autorDao() {
+        return new AutorService();
     }
 
     @Bean
-    public CommentDao commentDao() {
-        return new CommentDao();
+    public CommentService commentDao() {
+        return new CommentService();
     }
 
 //    @Profile({"devel", "test"})
@@ -80,32 +81,32 @@ public class Main {
         SpringApplication app = new SpringApplication(Main.class);
         ApplicationContext ctx = app.run(args);
 
-//        TestovaciDao testovaciDao = ctx.getBean(TestovaciDao.class);
+//        TestovaciService testovaciDao = ctx.getBean(TestovaciService.class);
 //        testovaciDao.incrementNLike(9);
         OffsetDateTime odt = OffsetDateTime.now();
 
-        PictureDao pictureDao = ctx.getBean(PictureDao.class);
-        AutorDao autorDao = ctx.getBean(AutorDao.class);
-        CommentDao commentDao = ctx.getBean(CommentDao.class);
-//        pictureDao.incrementNLike(5);
+        PictureService pictureService = ctx.getBean(PictureService.class);
+        AutorService autorService = ctx.getBean(AutorService.class);
+        CommentService commentService = ctx.getBean(CommentService.class);
+//        pictureService.incrementNLike(5);
 //
-//        List<Picture> pictures = pictureDao.getAllPictures();
+//        List<Picture> pictures = pictureService.getAllPictures();
 //
 //        Picture p1 = pictures.get(5);
 //        System.out.println(p1.toString());
 //        System.out.println(p1.getAutor().toString());
 //
-//        Picture p2 = pictureDao.getPicture(6);
+//        Picture p2 = pictureService.getPicture(6);
 //        System.out.println(p2.toString());
 //        System.out.println(p2.getAutor().toString());
 
-        Picture p3 = pictureDao.getPicture(5);
-        Autor a1 = autorDao.getAutor(2);
+        Picture p3 = pictureService.getPicture(5);
+        Autor a1 = autorService.getAutor(2);
 
         Comment comment = new Comment(1, 2, "Hibernate text komentare", "Titulek Hibernate",odt.toEpochSecond()+"");
         comment.setPicture(p3);
         comment.setAutor(a1);
-        commentDao.create(comment);
+        commentService.create(comment);
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
