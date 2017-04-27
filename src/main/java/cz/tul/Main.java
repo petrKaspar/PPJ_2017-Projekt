@@ -4,16 +4,18 @@ import cz.tul.data.*;
 import cz.tul.provisioning.Provisioner;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.time.*;
 import java.util.List;
@@ -66,7 +68,20 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception {
+        SpringApplication app = new SpringApplication(Main.class);
+        ApplicationContext ctx = app.run(args);
 
+        TestovaciDao testovaciDao = ctx.getBean(TestovaciDao.class);
+        testovaciDao.ldt(9);
+
+//        PictureDao pictureDao = ctx.getBean(PictureDao.class);
+////        AutorDao autorDao = ctx.getBean(AutorDao.class);
+////        CommentDao commentDao = ctx.getBean(CommentDao.class);
+//        pictureDao.incrementNLike(5);
+
+//        testovaciDao.ldt(9);
+
+        /*
         OffsetTime ot1 = OffsetTime.now();
         OffsetDateTime a = OffsetDateTime.now();
         System.out.println("Current  offset  time: " + a);
@@ -108,7 +123,7 @@ public class Main {
         commentDao.create(comment);
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+*/
 
     }
 

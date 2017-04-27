@@ -1,9 +1,7 @@
 package cz.tul.data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * Created by Petr on 03.04.2017.
@@ -15,11 +13,27 @@ public class Testovaci {
 
     @Id
     @GeneratedValue
+    @Column(name = "id_testovaci")
     private int id_testovaci;
     
     private String title;
     private int pocet;
     private String name;
+
+    @Column(name = "local_date_time")
+    private LocalDateTime local_date_time;
+
+    public LocalDateTime getLocal_date_time() {
+        return local_date_time;
+    }
+
+    public void setLocal_date_time(LocalDateTime local_date_time) {
+        this.local_date_time = local_date_time;
+    }
+
+    public Testovaci(){
+
+    }
 
     public Testovaci(String title, int pocet, String name) {
         this.title = title;

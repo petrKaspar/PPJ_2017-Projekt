@@ -34,13 +34,14 @@ public class PictureDao {
         return sessionFactory.getCurrentSession();
     }
 
-    private OffsetDateTime odt = OffsetDateTime.now();
+    private OffsetDateTime odt;
 
     public int create(Picture picture){
         return (int) session().save(picture);
     }
 
     public boolean incrementNLike(int id) {
+        odt = OffsetDateTime.now();
         Picture picture = (Picture) session().load(Picture.class, id);
         int nLike = picture.getNlike();
         System.out.println("nLike = "+nLike);
@@ -55,6 +56,7 @@ public class PictureDao {
     }
 
     public boolean incrementNDislike(int id) {
+        odt = OffsetDateTime.now();
         Picture picture = (Picture) session().load(Picture.class, id);
         int nDislike = picture.getNdislike();
         System.out.println("nDislike = "+nDislike);

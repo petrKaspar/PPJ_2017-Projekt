@@ -10,6 +10,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * Created by Petr on 03.04.2017.
  * Urceno pro me vlastni pokusy a zkouseni, jak co funguje. Ve finalni verzi semestralky nebude.
@@ -34,6 +36,7 @@ public class TestovaciDao {
 
     public boolean incrementNLike(int id) {
         Testovaci testovaci = (Testovaci) session().load(Testovaci.class, id);
+//        Criteria crit = session().createCriteria(Testovaci.class);
         int nLike = testovaci.getPocet();
         System.out.println("+++++++++"+nLike+"++++++++++");
         testovaci.setPocet(nLike + 1);
@@ -41,6 +44,18 @@ public class TestovaciDao {
         System.out.println(updatedKey);
         return true;
     }
+//
+    public boolean ldt(int id) {
+        Testovaci testovaci = (Testovaci) session().load(Testovaci.class, id);
+        System.out.println("+++++++++"+LocalDateTime.now()+"++++++++++");
+//        testovaci.setPocet(nLike + 1);
+        testovaci.setLocal_date_time(LocalDateTime.now());
+//        int updatedKey = (int) session().save(testovaci);
+//        System.out.println(updatedKey);
+        return true;
+    }
+
+
 /*
     public boolean exists(String username) {
         Criteria crit = session().createCriteria(User.class);

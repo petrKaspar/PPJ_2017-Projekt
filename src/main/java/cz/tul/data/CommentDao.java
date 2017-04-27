@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -30,14 +31,16 @@ public class CommentDao {
     public Session session() {
         return sessionFactory.getCurrentSession();
     }
-
-    private OffsetDateTime odt = OffsetDateTime.now();
+//
+    private OffsetDateTime odt;
+    private LocalDateTime ldt = LocalDateTime.now();
 
     public int create(Comment comment){
         return (int) session().save(comment);
     }
 
     public boolean incrementNLike(int id) {
+        odt = OffsetDateTime.now();
         Comment comment = (Comment) session().load(Comment.class, id);
         int nLike = comment.getNlike();
         System.out.println("nLike = "+nLike);
@@ -52,6 +55,7 @@ public class CommentDao {
     }
 
     public boolean incrementNDislike(int id) {
+        odt = OffsetDateTime.now();
         Comment comment = (Comment) session().load(Comment.class, id);
         int nDislike = comment.getNdislike();
         System.out.println("nDislike = "+nDislike);
