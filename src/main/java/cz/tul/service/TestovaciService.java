@@ -2,31 +2,44 @@ package cz.tul.service;
 
 import cz.tul.data.Testovaci;
 import cz.tul.repositories.TestovaciRepository;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by Petr on 03.04.2017.
  * Urceno pro me vlastni pokusy a zkouseni, jak co funguje. Ve finalni verzi semestralky nebude.
  */
+@Service
 @Transactional
 public class TestovaciService {
 
-    private final TestovaciRepository testovaciRepository;
-
     @Autowired
-    private SessionFactory sessionFactory;
+    private TestovaciRepository testovaciRepository;
 
-    public TestovaciService(TestovaciRepository testovaciRepository) {
-        this.testovaciRepository = testovaciRepository;
+//    public TestovaciService(TestovaciRepository bean) {
+//
+//    }
+//
+//    public TestovaciService(TestovaciRepository bean) {
+//
+//    }
+
+    public void create(Testovaci testovaci) {
+        testovaciRepository.save(testovaci);
     }
 
-    public Session session() {
-        return sessionFactory.getCurrentSession();
+    public List<Testovaci> getAllTestovaci() {
+        return StreamSupport.stream(testovaciRepository.findAll().spliterator(), false).collect(Collectors.toList());
+//        return (List<Testovaci>) testovaciRepository.findAll();
     }
 
+
+    /*
     public boolean create(Testovaci testovaci) {
         System.out.println("-------------------------");
         System.out.println("New ID = "+  session().save(testovaci));
@@ -42,7 +55,7 @@ public class TestovaciService {
         int updatedKey = (int) session().save(testovaci);
         System.out.println(updatedKey);
         return true;
-    }
+    }*/
 /*
     public boolean exists(String username) {
         Criteria crit = session().createCriteria(User.class);

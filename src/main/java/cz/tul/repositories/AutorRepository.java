@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 @Repository
 public interface AutorRepository extends CrudRepository<Autor, Integer>{
+
 }

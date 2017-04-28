@@ -5,7 +5,8 @@
 
     <modelVersion>4.0.0</modelVersion>
     <!--<artifactId>spring-boot-jdbc-v2</artifactId>-->
-    <artifactId>spring-hibernate-spring-boot</artifactId>
+    <!--<artifactId>spring-hibernate-spring-boot</artifactId>-->
+    <artifactId>spring-jpa-with-spring-boot</artifactId>
     <packaging>jar</packaging>
 
     <parent>

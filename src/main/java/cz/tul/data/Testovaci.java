@@ -21,6 +21,9 @@ public class Testovaci {
     private int pocet;
     private String name;
 
+    public Testovaci() {
+    }
+
     public Testovaci(String title, int pocet, String name) {
         this.title = title;
         this.pocet = pocet;
