@@ -2,6 +2,7 @@ package cz.tul;
 
 import cz.tul.configurations.MainSpringConfiguration;
 import cz.tul.data.*;
+import cz.tul.repositories.PictureRepository;
 import cz.tul.repositories.TestovaciRepository;
 import cz.tul.service.AutorService;
 import cz.tul.service.CommentService;
@@ -11,6 +12,12 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -27,30 +34,37 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-@SpringBootApplication
+//@SpringBootApplication
 //@EnableTransactionManagement    // abych mohl vyuzivat nad entitama 2transactional
 //@EntityScan("cz.tul.data")
+@SpringBootApplication(exclude = {
+        MongoAutoConfiguration.class,
+        MongoDataAutoConfiguration.class,
+        MongoRepositoriesAutoConfiguration.class,
+        HibernateJpaAutoConfiguration.class,
+        DataSourceAutoConfiguration.class,
+        JpaRepositoriesAutoConfiguration.class})
 public class Main {
 
 //    @Bean
 //    public TestovaciService testovaciDao() {
 //        return new TestovaciService(testovaciRepository);
 //    }
-
-    @Bean
-    public PictureService pictureDao() {
-        return new PictureService();
-    }
-
-    @Bean
-    public AutorService autorDao() {
-        return new AutorService();
-    }
-
-    @Bean
-    public CommentService commentDao() {
-        return new CommentService();
-    }
+//
+//    @Bean
+//    public PictureService pictureDao() {
+//        return new PictureService();
+//    }
+//
+//    @Bean
+//    public AutorService autorDao() {
+//        return new AutorService();
+//    }
+//
+//    @Bean
+//    public CommentService commentDao() {
+//        return new CommentService();
+//    }
 
 //    @Profile({"devel", "test"})
 //    @Bean(initMethod = "doProvision")
@@ -59,18 +73,18 @@ public class Main {
 //    }
 
 
-    @Autowired
-    EntityManagerFactory entityManagerFactory;
-
-    @Bean
-    public SessionFactory sessionFactory() {
-        return entityManagerFactory.unwrap(SessionFactory.class);
-    }
-
-    @Bean
-    public PlatformTransactionManager txManager() {
-        return new HibernateTransactionManager(entityManagerFactory.unwrap(SessionFactory.class));
-    }
+//    @Autowired
+//    EntityManagerFactory entityManagerFactory;
+//
+//    @Bean
+//    public SessionFactory sessionFactory() {
+//        return entityManagerFactory.unwrap(SessionFactory.class);
+//    }
+//
+//    @Bean
+//    public PlatformTransactionManager txManager() {
+//        return new HibernateTransactionManager(entityManagerFactory.unwrap(SessionFactory.class));
+//    }
 
     public static void main(String[] args) throws Exception {
 
@@ -84,6 +98,7 @@ public class Main {
 
         SpringApplication application = new SpringApplication(Main.class);
         ConfigurableApplicationContext context = application.run(args);
+
 //        BaseBillRepository billRepository = context.getBean(BaseBillRepository.class);
 //        BaseUserRepository userRepository = context.getBean(BaseUserRepository.class);
         TestovaciRepository testovaciRepository = context.getBean(TestovaciRepository.class);
@@ -93,11 +108,33 @@ public class Main {
         Iterable<Testovaci> testovacis = testovaciRepository.findAll();
         System.out.println(testovacis);
         System.out.println("---------------------------------------");
+        System.out.println(testovaciRepository.exists(4));
+        System.out.println("---------------------------------------");
+        Testovaci t = new Testovaci("Test JPA", 12345, "Petr JPA");
+//        <Testovaci extends>
+//        testovaciRepository.save(t);
+                System.out.println(testovaciRepository.save(t));
+                System.out.println(testovaciRepository.save(t).gettitle());
+                System.out.println(testovaciRepository.save(t).getId_testovaci());
 //        List<Testovaci> testovacis1 = testovaciService.getAllTestovaci();
 //        System.out.println(testovacis1);
+        System.out.println("---------------------------------------");
+        context.getBean(TestovaciService.class).getAllTestovaci().forEach(System.out::println);
 
+        System.out.println("---------------------------------------");
+        System.out.println("testovaciRepository.findTitleById(26) = " + testovaciRepository.findTitleById(26));
         OffsetTime ot1 = OffsetTime.now();
         OffsetDateTime a = OffsetDateTime.now();
+
+
+        System.out.println("========================== Autor =======================");
+        PictureRepository pictureRepository = context.getBean(PictureRepository.class);
+        System.out.println("pictureRepository.findAll() = " + pictureRepository.findAll());
+        System.out.println("pictureRepository.incrementNLike(12) = " + pictureRepository.incrementNLike(12,"lastUpdate"));
+        //
+// pictureRepository.incrementNLike()
+
+
 //        System.out.println("Current  offset  time: " + a);
 //        System.out.println("Current  offset  time: " + a.toEpochSecond());
 //

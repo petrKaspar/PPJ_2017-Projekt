@@ -30,6 +30,14 @@ public class Testovaci {
         this.name = name;
     }
 
+    public int getId_testovaci() {
+        return id_testovaci;
+    }
+
+    public void setId_testovaci(int id_testovaci) {
+        this.id_testovaci = id_testovaci;
+    }
+
     public String gettitle() {
         return title;
     }

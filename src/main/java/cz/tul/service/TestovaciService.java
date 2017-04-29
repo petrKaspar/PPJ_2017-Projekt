@@ -3,6 +3,8 @@ package cz.tul.service;
 import cz.tul.data.Testovaci;
 import cz.tul.repositories.TestovaciRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +39,8 @@ public class TestovaciService {
         return StreamSupport.stream(testovaciRepository.findAll().spliterator(), false).collect(Collectors.toList());
 //        return (List<Testovaci>) testovaciRepository.findAll();
     }
+
+
 
 
     /*
