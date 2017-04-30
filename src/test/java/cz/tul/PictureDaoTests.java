@@ -12,6 +12,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -34,14 +35,9 @@ public class PictureDaoTests {
     @Test
     public void Test1_createPicture() throws SQLException {
 
-//        pictureService.create(picture);
+        LocalDateTime localDateTime = LocalDateTime.now();;
 
-//        assertTrue("User creation should return true", usersDao.create(user));
-
-//        Offer offer = new Offer(user, "This is a test offer.");
-
-        OffsetDateTime odt = OffsetDateTime.now();
-        Picture picture = new Picture(2, "http://url.cz", "pokus 1", odt.toEpochSecond()+"");
+        Picture picture = new Picture(2, "http://url.cz", "pokus 1", localDateTime.toString());
         Autor autor = autorService.getAutor(2);
         picture.setAutor(autor);
 
@@ -81,18 +77,10 @@ public class PictureDaoTests {
 //        Picture picture = pictures.get(0);
         System.out.println("pictures.size() = " + pictures.size());
 
-        OffsetDateTime odt = OffsetDateTime.now();;
-        Picture picture = new Picture(2, "http://url.cz", "pokus 1", odt.toEpochSecond()+"");
+        LocalDateTime localDateTime = LocalDateTime.now();;
+        Picture picture = new Picture(2, "http://url.cz", "pokus 1", localDateTime.toString());
         Autor autor = autorService.getAutor(2);
         picture.setAutor(autor);
-
-//        System.out.println(picture.getAutor().getAutor_id());
-//        System.out.println(pictures.get(pictures.size()-1).getAutor_id());
-//        System.out.println(pictures.get(pictures.size()-1).getAutor().getAutor_id());
-//        System.out.println(picture.getAutor().getname());
-//        System.out.println(pictures.get(pictures.size()-1).getAutor().getname());
-//        System.out.println(picture.getAutor().getRegistration());
-//        System.out.println(pictures.get(pictures.size()-1).getAutor().getRegistration());
 
         assertEquals("Should be one offer in database.", pictures.size(), pictures.size());
 

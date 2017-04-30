@@ -1,6 +1,8 @@
 package cz.tul.service;
 
+import cz.tul.data.Autor;
 import cz.tul.data.Picture;
+import cz.tul.repositories.PictureRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,80 +12,110 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by Petr on 09.04.2017.
  */
+@Service
 @Transactional
 public class PictureService {
 
 
     @Autowired
-    private SessionFactory sessionFactory;
-
-    public Session session() {
-        return sessionFactory.getCurrentSession();
-    }
-
-    private OffsetDateTime odt = OffsetDateTime.now();
+    private PictureRepository pictureRepository;
 
     public int create(Picture picture){
-        return (int) session().save(picture);
+        Picture newPicture = pictureRepository.save(picture);
+        return newPicture.getPicture_id();
+    }
+
+    public List<Picture> getAllPictures() {
+        return StreamSupport.stream(pictureRepository.findAll().spliterator(), false).collect(Collectors.toList());
+    }
+    //
+    public Picture getPicture(int id) {
+        return pictureRepository.findOne(id);
     }
 
     public boolean incrementNLike(int id) {
-        Picture picture = (Picture) session().load(Picture.class, id);
-        int nLike = picture.getNlike();
-        System.out.println("nLike = "+nLike);
-
-        picture.setNlike(nLike + 1);
-        picture.setLastUpdate(odt.toEpochSecond()+"");
-
-        int updatedKey = (int) session().save(picture);
-
-        System.out.println(updatedKey);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        pictureRepository.incrementNLike(id, localDateTime.toString());
         return true;
     }
 
     public boolean incrementNDislike(int id) {
-        Picture picture = (Picture) session().load(Picture.class, id);
-        int nDislike = picture.getNdislike();
-        System.out.println("nDislike = "+nDislike);
-
-        picture.setNdislike(nDislike + 1);
-        picture.setLastUpdate(odt.toEpochSecond()+"");
-
-        int updatedKey = (int) session().save(picture);
-
-        System.out.println(updatedKey);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        pictureRepository.incrementNDisLike(id, localDateTime.toString());
         return true;
-
     }
 
-    @SuppressWarnings("unchecked")
-    public List<Picture> getAllPictures() {
-//        return session().createQuery("from autor").list();
-        Criteria crit = session().createCriteria(Picture.class);
-        return crit.list();
-    }
-
-    public Picture getPicture(int id) {
-        Criteria crit = session().createCriteria(Picture.class);
-        crit.add(Restrictions.idEq(id));
-
-        return (Picture) crit.uniqueResult();
-    }
-
+//    public Session session() {
+//        return sessionFactory.getCurrentSession();
+//    }
+//
+//    private OffsetDateTime odt = OffsetDateTime.now();
+//
+//    public int create(Picture picture){
+//        return (int) session().save(picture);
+//    }
+//
+//    public boolean incrementNLike(int id) {
+//        Picture picture = (Picture) session().load(Picture.class, id);
+//        int nLike = picture.getNlike();
+//        System.out.println("nLike = "+nLike);
+//
+//        picture.setNlike(nLike + 1);
+//        picture.setLastUpdate(odt.toEpochSecond()+"");
+//
+//        int updatedKey = (int) session().save(picture);
+//
+//        System.out.println(updatedKey);
+//        return true;
+//    }
+//
+//    public boolean incrementNDislike(int id) {
+//        Picture picture = (Picture) session().load(Picture.class, id);
+//        int nDislike = picture.getNdislike();
+//        System.out.println("nDislike = "+nDislike);
+//
+//        picture.setNdislike(nDislike + 1);
+//        picture.setLastUpdate(odt.toEpochSecond()+"");
+//
+//        int updatedKey = (int) session().save(picture);
+//
+//        System.out.println(updatedKey);
+//        return true;
+//
+//    }
+//
+//    @SuppressWarnings("unchecked")
+//    public List<Picture> getAllPictures() {
+////        return session().createQuery("from autor").list();
+//        Criteria crit = session().createCriteria(Picture.class);
+//        return crit.list();
+//    }
+//
+//    public Picture getPicture(int id) {
+//        Criteria crit = session().createCriteria(Picture.class);
+//        crit.add(Restrictions.idEq(id));
+//
+//        return (Picture) crit.uniqueResult();
+//    }
+//////**************************************************************************************
     /*
     @Autowired
     private NamedParameterJdbcOperations jdbc;

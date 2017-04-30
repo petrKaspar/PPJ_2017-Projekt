@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.sound.midi.Soundbank;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -23,33 +25,27 @@ import static org.junit.Assert.assertTrue;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AutorDaoTests {
 
-
     @Autowired
     private AutorService autorService;
 
     @Test
     public void testUsers() {
-        OffsetDateTime odt = OffsetDateTime.now();;
-
-        Autor a = new Autor("Franta hibernate", odt.toEpochSecond()+"");
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Autor a = new Autor("Jarda JPA", localDateTime.getDayOfMonth()+"");
 
         List<Autor> autors = autorService.getAllAutors();
         int nAutors = autors.size();
-
         int key = autorService.create(a);
         a.setAutor_id(key);
         autors = autorService.getAllAutors();
-
-        System.out.println(a.toString());
-        System.out.println(autors.get(key-1).toString());
 
         assertEquals("Created user should be identical to retrieved user", nAutors + 1, autors.size());
 
         Autor a1 = autorService.getAutor(1);
         assertEquals("Created user ID should be identical to retrieved user ID", a1.getAutor_id(), 1);
 
-//        assertEquals("Created user should be identical to retrieved user", a, autors.get(key-1));
-//        assertSame("Created user should be identical to retrieved user", a, autors.get(key-1));
+//        assertEquals("Created user should be identical to retrieved user", a, autors.get(autors.size()-1));
+//        assertSame("Created user should be identical to retrieved user", a, autors.get(autors.size()-1));
 
 
 

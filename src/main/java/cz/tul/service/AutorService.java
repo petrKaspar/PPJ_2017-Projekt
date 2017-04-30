@@ -1,61 +1,42 @@
 package cz.tul.service;
 
 import cz.tul.data.Autor;
+import cz.tul.repositories.AutorRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by Petr on 09.04.2017.
  */
+@Service
 @Transactional
 public class AutorService {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private AutorRepository autorRepository;
 
-    public Session session() {
-        return sessionFactory.getCurrentSession();
+    public int create(Autor autor){
+        Autor newAutor = autorRepository.save(autor);
+        return newAutor.getAutor_id();
     }
 
-    public int create(Autor autor) {
-        int newKey = (int) session().save(autor);
-        System.out.println("-------------------------");
-        System.out.println("New ID = "+ newKey);
-        System.out.println("-------------------------");
-        return newKey;
-    }
-
-    @SuppressWarnings("unchecked")
     public List<Autor> getAllAutors() {
-//        return session().createQuery("from autor").list();
-        Criteria crit = session().createCriteria(Autor.class);
-        return crit.list();
+        return StreamSupport.stream(autorRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
-
+//
     public Autor getAutor(int id) {
-        Criteria crit = session().createCriteria(Autor.class);
-
-//        crit.createAlias("autor", "a");
-//        crit.add(Restrictions.eq("a.enabled", true));
-        crit.add(Restrictions.idEq(id));
-
-        return (Autor) crit.uniqueResult();
+        return autorRepository.findOne(id);
     }
-
+////////------------------------------------------------------
     /*
     @Autowired
     private NamedParameterJdbcOperations jdbc;

@@ -1,49 +1,31 @@
 package cz.tul;
 
-import cz.tul.configurations.MainSpringConfiguration;
 import cz.tul.data.*;
+import cz.tul.repositories.AutorRepository;
 import cz.tul.repositories.PictureRepository;
 import cz.tul.repositories.TestovaciRepository;
-import cz.tul.service.AutorService;
-import cz.tul.service.CommentService;
-import cz.tul.service.PictureService;
 import cz.tul.service.TestovaciService;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
-import org.springframework.boot.orm.jpa.EntityScan;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManagerFactory;
 import java.time.*;
-import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
 //@SpringBootApplication
 //@EnableTransactionManagement    // abych mohl vyuzivat nad entitama 2transactional
 //@EntityScan("cz.tul.data")
-@SpringBootApplication(exclude = {
-        MongoAutoConfiguration.class,
-        MongoDataAutoConfiguration.class,
-        MongoRepositoriesAutoConfiguration.class,
-        HibernateJpaAutoConfiguration.class,
-        DataSourceAutoConfiguration.class,
-        JpaRepositoriesAutoConfiguration.class})
+
+//@SpringBootApplication(exclude = {
+//        MongoAutoConfiguration.class,
+//        MongoDataAutoConfiguration.class,
+//        MongoRepositoriesAutoConfiguration.class,
+//        HibernateJpaAutoConfiguration.class,
+//        DataSourceAutoConfiguration.class,
+//        JpaRepositoriesAutoConfiguration.class})
+
+@SpringBootApplication
 public class Main {
 
 //    @Bean
@@ -128,6 +110,11 @@ public class Main {
 
 
         System.out.println("========================== Autor =======================");
+        AutorRepository autorRepository = context.getBean(AutorRepository.class);
+
+
+
+        System.out.println("========================== Picture =======================");
         PictureRepository pictureRepository = context.getBean(PictureRepository.class);
         System.out.println("pictureRepository.findAll() = " + pictureRepository.findAll());
         System.out.println("pictureRepository.incrementNLike(12) = " + pictureRepository.incrementNLike(12,"lastUpdate"));

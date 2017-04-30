@@ -31,10 +31,10 @@ public class TestovaciDaoTests {
 
 //        testovaciService.deleteTestovaci(7);
 
-       Testovaci testovaci = new Testovaci("Test Hibernate", 666, "Petr666 H");
+       Testovaci testovaci = new Testovaci("Testovani JPA", 123, "Petr JPA test");
 
-//        testovaciService.create(testovaci);
-       ///////////////////assertTrue("Offer creation should return true", testovaciService.create(testovaci));
+        testovaciService.create(testovaci);
+//       assertTrue("Offer creation should return true", testovaciService.create(testovaci));
     }
 
 }

@@ -1,6 +1,9 @@
 package cz.tul.service;
 
 import cz.tul.data.Comment;
+import cz.tul.data.Picture;
+import cz.tul.repositories.CommentRepository;
+import cz.tul.repositories.PictureRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,75 +15,67 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by Petr on 10.04.2017.
  */
+@Service
 @Transactional
 public class CommentService {
 
     @Autowired
-    private SessionFactory sessionFactory;
-
-    public Session session() {
-        return sessionFactory.getCurrentSession();
-    }
-
-    private OffsetDateTime odt = OffsetDateTime.now();
+    private CommentRepository commentRepository;
 
     public int create(Comment comment){
-        return (int) session().save(comment);
+        Comment newComment = commentRepository.save(comment);
+        return newComment.getcomment_id();
+    }
+
+    public List<Comment> getAllComments() {
+        return StreamSupport.stream(commentRepository.findAll().spliterator(), false).collect(Collectors.toList());
+    }
+    //
+    public Comment getComment(int id) {
+        return commentRepository.findOne(id);
     }
 
     public boolean incrementNLike(int id) {
-        Comment comment = (Comment) session().load(Comment.class, id);
-        int nLike = comment.getNlike();
-        System.out.println("nLike = "+nLike);
-
-        comment.setNlike(nLike + 1);
-        comment.setLastUpdate(odt.toEpochSecond()+"");
-
-        int updatedKey = (int) session().save(comment);
-
-        System.out.println(updatedKey);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        commentRepository.incrementNLike(id, localDateTime.toString());
         return true;
     }
 
     public boolean incrementNDislike(int id) {
-        Comment comment = (Comment) session().load(Comment.class, id);
-        int nDislike = comment.getNdislike();
-        System.out.println("nDislike = "+nDislike);
-
-        comment.setNdislike(nDislike + 1);
-        comment.setLastUpdate(odt.toEpochSecond()+"");
-
-        int updatedKey = (int) session().save(comment);
-
-        System.out.println(updatedKey);
+        LocalDateTime localDateTime = LocalDateTime.now();
+        commentRepository.incrementNDisLike(id, localDateTime.toString());
         return true;
-
     }
 
-    @SuppressWarnings("unchecked")
-    public List<Comment> getAllComments() {
-//        return session().createQuery("from autor").list();
-        Criteria crit = session().createCriteria(Comment.class);
-        return crit.list();
-    }
-
-    public Comment getComment(int id) {
-        Criteria crit = session().createCriteria(Comment.class);
-        crit.add(Restrictions.idEq(id));
-
-        return (Comment) crit.uniqueResult();
-    }
-
+//
+//    @SuppressWarnings("unchecked")
+//    public List<Comment> getAllComments() {
+////        return session().createQuery("from autor").list();
+//        Criteria crit = session().createCriteria(Comment.class);
+//        return crit.list();
+//    }
+//
+//    public Comment getComment(int id) {
+//        Criteria crit = session().createCriteria(Comment.class);
+//        crit.add(Restrictions.idEq(id));
+//
+//        return (Comment) crit.uniqueResult();
+//    }
+//////*******************************************************************************
     /*
     public int create(Comment comment) throws SQLException {
 

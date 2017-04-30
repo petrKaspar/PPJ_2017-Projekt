@@ -60,12 +60,11 @@ public class CommentDaoTests {
         List<Comment> comments = commentService.getAllComments();
 
         int lastComment = comments.get(comments.size()-1).getcomment_id();
-        System.out.println(lastComment+"aaaaaaaaaaaaaaa");
         int nLike = comments.get(comments.size()-1).getNlike();
         int nDislike = comments.get(comments.size()-1).getNdislike();
         String lastUpdate = comments.get(comments.size()-1).getLastUpdate();
 
-        System.out.println(commentService.incrementNLike(lastComment));;
+        commentService.incrementNLike(lastComment);
         commentService.incrementNDislike(lastComment);
 
         Comment c = commentService.getComment(lastComment);
