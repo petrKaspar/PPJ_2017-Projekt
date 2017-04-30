@@ -23,7 +23,7 @@ public class CommentService {
 
     public int create(Comment comment){
         Comment newComment = commentRepository.save(comment);
-        return newComment.getcomment_id();
+        return newComment.getcommentId();
     }
 
     public List<Comment> getAllComments() {

@@ -12,9 +12,9 @@ public class Picture {
     @Id
     @GeneratedValue
     @Column(name = "picture_id")
-    private int picture_id;
+    private int pictureId;
 
-//    private int autor_id;
+//    private int authorId;
 
     private String url;
     private String title;
@@ -29,25 +29,25 @@ public class Picture {
     private int ndislike;
 
 
-    //@Column(name = "autor")
+    //@Column(name = "author")
     @OneToOne
-    @JoinColumn(name = "autor_id")
-    private Autor autor;
+    @JoinColumn(name = "author_id")
+    private Author author;
 
 //    @OneToOne
-//    @JoinColumn(name = "comment_id")
+//    @JoinColumn(name = "commentId")
 //    private Comment comment;
 
-    public Autor getAutor() {
-        return autor;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
-    public Picture(Autor autor, String url, String title, String created){
-        this.autor = autor;
+    public Picture(Author author, String url, String title, String created){
+        this.author = author;
         this.url = url;
         this.title = title;
         this.created = created;
@@ -56,19 +56,19 @@ public class Picture {
     public Picture() {
     }
 
-    public Picture(int autor_id, String url, String title, String created) {
-//        this.autor_id = autor_id;
+    public Picture(int authorId, String url, String title, String created) {
+//        this.authorId = authorId;
         this.url = url;
         this.title = title;
         this.created = created;
     }
 
-    public void setPicture_id(int picture_id) {
-        this.picture_id = picture_id;
+    public void setPictureId(int pictureId) {
+        this.pictureId = pictureId;
     }
 
-//    public void setAutor_id(int autor_id) {
-//        this.autor_id = autor_id;
+//    public void setAuthorId(int authorId) {
+//        this.authorId = authorId;
 //    }
 
     public void setUrl(String url) {
@@ -95,12 +95,12 @@ public class Picture {
         this.ndislike = ndislike;
     }
 
-    public int getPicture_id() {
-        return picture_id;
+    public int getPictureId() {
+        return pictureId;
     }
 
-//    public int getAutor_id() {
-//        return autor_id;
+//    public int getAuthorId() {
+//        return authorId;
 //    }
 
     public String getUrl() {
@@ -138,8 +138,8 @@ public class Picture {
     @Override
     public String toString() {
         return "Picture{" +
-                "picture_id=" + picture_id +
-//                ", autor_id=" + autor_id +
+                "pictureId=" + pictureId +
+//                ", authorId=" + authorId +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
                 ", created='" + created + '\'' +
@@ -147,7 +147,7 @@ public class Picture {
                 ", tags='" + tags + '\'' +
                 ", nlike=" + nlike +
                 ", ndislike=" + ndislike +
-                ", autor=" + autor +
+                ", author=" + author +
                 '}';
     }
 

@@ -17,14 +17,14 @@ public interface PictureRepository extends CrudRepository<Picture, Integer> {
 
     @Modifying
     @Transactional
-    @Query("update Picture set nlike = nlike + 1, lastUpdate=:lastUpdate where picture_id=:picture_id")
-    int incrementNLike(@Param("picture_id") int picture_id,
+    @Query("update Picture set nlike = nlike + 1, lastUpdate=:lastUpdate where pictureId=:pictureId")
+    int incrementNLike(@Param("pictureId") int pictureId,
                        @Param("lastUpdate") String lastUpdate);
 
     @Modifying
     @Transactional
-    @Query("update Picture set ndislike = ndislike + 1, lastUpdate=:lastUpdate where picture_id=:picture_id")
-    int incrementNDisLike(@Param("picture_id") int picture_id,
+    @Query("update Picture set ndislike = ndislike + 1, lastUpdate=:lastUpdate where pictureId=:pictureId")
+    int incrementNDisLike(@Param("pictureId") int pictureId,
                        @Param("lastUpdate") String lastUpdate);
 
 

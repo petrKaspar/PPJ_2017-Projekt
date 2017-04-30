@@ -16,14 +16,14 @@ public interface CommentRepository extends CrudRepository<Comment, Integer> {
 
     @Modifying
     @Transactional
-    @Query("update Comment set nlike = nlike + 1, lastUpdate=:lastUpdate where comment_id=:comment_id")
-    int incrementNLike(@Param("comment_id") int comment_id,
+    @Query("update Comment set nlike = nlike + 1, lastUpdate=:lastUpdate where commentId=:commentId")
+    int incrementNLike(@Param("commentId") int commentId,
                        @Param("lastUpdate") String lastUpdate);
 
     @Modifying
     @Transactional
-    @Query("update Comment set ndislike = ndislike + 1, lastUpdate=:lastUpdate where comment_id=:comment_id")
-    int incrementNDisLike(@Param("comment_id") int comment_id,
+    @Query("update Comment set ndislike = ndislike + 1, lastUpdate=:lastUpdate where commentId=:commentId")
+    int incrementNDisLike(@Param("commentId") int commentId,
                           @Param("lastUpdate") String lastUpdate);
 
 }

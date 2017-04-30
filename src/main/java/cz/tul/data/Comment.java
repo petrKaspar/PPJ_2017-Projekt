@@ -12,13 +12,14 @@ public class Comment {
     @Id
     @GeneratedValue
     @Column(name = "comment_id")
-    private int comment_id;
+    private int commentId;
 
-//    private int picture_id;
-//    private int autor_id;
-//    private int autor_comment_id;
+//    private int pictureId;
+//    private int authorId;
+//    private int author_commentId;
 
-    private String text_comment;
+    @Column(name = "text_comment")
+    private String textComment;
     private String title;
     private String created;
     private String lastUpdate;
@@ -27,26 +28,26 @@ public class Comment {
     private int ndislike;
 
     @ManyToOne
-    @JoinColumn(name = "autor_id")
-    private Autor autor;
+    @JoinColumn(name = "author_id")
+    private Author author;
 
 //    @Column(name = "picture")
     @ManyToOne
     @JoinColumn(name = "picture_id")
     private Picture picture;
 
-    public Comment(int picture_id, int autor_id, String text_comment, String title, String created) {
-//        this.picture_id = picture_id;
-//        this.autor_id = autor_id;
-        this.text_comment = text_comment;
+    public Comment(int pictureId, int authorId, String textComment, String title, String created) {
+//        this.pictureId = pictureId;
+//        this.authorId = authorId;
+        this.textComment = textComment;
         this.title = title;
         this.created = created;
     }
 
-    public Comment(Picture picture, Autor autor, String text_comment, String title, String created) {
+    public Comment(Picture picture, Author author, String textComment, String title, String created) {
         this.picture = picture;
-        this.autor = autor;
-        this.text_comment = text_comment;
+        this.author = author;
+        this.textComment = textComment;
         this.title = title;
         this.created = created;
     }
@@ -54,28 +55,28 @@ public class Comment {
     public Comment() {
     }
 
-    public int getcomment_id() {
-        return comment_id;
+    public int getcommentId() {
+        return commentId;
     }
 
-    public void setcomment_id(int comment_id) {
-        this.comment_id = comment_id;
+    public void setcommentId(int commentId) {
+        this.commentId = commentId;
     }
 
-//    public int getAutor_comment_id() {
-//        return autor_comment_id;
+//    public int getAuthor_commentId() {
+//        return author_commentId;
 //    }
 //
-//    public void setAutor_comment_id(int autor_comment_id) {
-//        this.autor_comment_id = autor_comment_id;
+//    public void setAuthor_commentId(int author_commentId) {
+//        this.author_commentId = author_commentId;
 //    }
 
-    public String getText_comment() {
-        return text_comment;
+    public String getTextComment() {
+        return textComment;
     }
 
-    public void setText_comment(String text_comment) {
-        this.text_comment = text_comment;
+    public void setTextComment(String textComment) {
+        this.textComment = textComment;
     }
 
     public String gettitle() {
@@ -118,28 +119,28 @@ public class Comment {
         this.ndislike = ndislike;
     }
 
-//    public int getAutor_id() {
-//        return autor_id;
+//    public int getAuthorId() {
+//        return authorId;
 //    }
 
-//    public void setAutor_id(int autor_id) {
-//        this.autor_id = autor_id;
+//    public void setAuthorId(int authorId) {
+//        this.authorId = authorId;
 //    }
 
-//    public int getPicture_id() {
-//        return picture_id;
+//    public int getPictureId() {
+//        return pictureId;
 //    }
 
-//    public void setPicture_id(int picture_id) {
-//        this.picture_id = picture_id;
+//    public void setPictureId(int pictureId) {
+//        this.pictureId = pictureId;
 //    }
 
-    public Autor getAutor() {
-        return autor;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public Picture getPicture() {

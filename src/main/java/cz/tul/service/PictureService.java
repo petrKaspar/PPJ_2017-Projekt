@@ -24,7 +24,7 @@ public class PictureService {
 
     public int create(Picture picture){
         Picture newPicture = pictureRepository.save(picture);
-        return newPicture.getPicture_id();
+        return newPicture.getPictureId();
     }
 
     public List<Picture> getAllPictures() {

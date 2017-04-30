@@ -1,7 +1,7 @@
 package cz.tul;
 
 import cz.tul.data.*;
-import cz.tul.service.AutorService;
+import cz.tul.service.AuthorService;
 import cz.tul.service.CommentService;
 import cz.tul.service.PictureService;
 import org.junit.FixMethodOrder;
@@ -29,7 +29,7 @@ public class CommentDaoTests {
     private PictureService pictureService;
 
     @Autowired
-    private AutorService autorService;
+    private AuthorService authorService;
 
     @Autowired
     private CommentService commentService;
@@ -38,37 +38,49 @@ public class CommentDaoTests {
     public void Test1_createComment() throws SQLException {
 
         OffsetDateTime odt = OffsetDateTime.now();
-        //int picture_id, int autor_id, String text_comment, String title, String created
         Comment comment = new Comment(1, 2, "Hibernate text komentare", "Titulek Hibernate",odt.toEpochSecond()+"");
-        Autor autor = autorService.getAutor(2);
+        Author author = authorService.getAuthor(2);
         Picture p3 = pictureService.getPicture(5);
 
-        comment.setAutor(autor);
+        comment.setAuthor(author);
         comment.setPicture(p3);
-//        assertTrue("Offer creation should return true", commentService.createBool(comment));
 
         List<Comment> comments = commentService.getAllComments();
         assertEquals("Should be one Comment in database.", comments.size(), commentService.create(comment) - 1);
 
-
     }
 
     @Test
-    public void Test_addLikeDislike() {
+    public void Test_addLike() {
 
         List<Comment> comments = commentService.getAllComments();
 
-        int lastComment = comments.get(comments.size()-1).getcomment_id();
+        int lastComment = comments.get(comments.size()-1).getcommentId();
         int nLike = comments.get(comments.size()-1).getNlike();
-        int nDislike = comments.get(comments.size()-1).getNdislike();
         String lastUpdate = comments.get(comments.size()-1).getLastUpdate();
 
         commentService.incrementNLike(lastComment);
-        commentService.incrementNDislike(lastComment);
 
         Comment c = commentService.getComment(lastComment);
 
         assertEquals("Comment.getNlike() Should be nLike + 1.", nLike + 1, c.getNlike());
+        assertNotEquals("Comment.getNlike() Should be nLike + 1.", lastUpdate, c.getLastUpdate());
+
+    }
+
+    @Test
+    public void Test_addDislike() {
+
+        List<Comment> comments = commentService.getAllComments();
+
+        int lastComment = comments.get(comments.size()-1).getcommentId();
+        int nDislike = comments.get(comments.size()-1).getNdislike();
+        String lastUpdate = comments.get(comments.size()-1).getLastUpdate();
+
+        commentService.incrementNDislike(lastComment);
+
+        Comment c = commentService.getComment(lastComment);
+
         assertEquals("Comment.getNdislike() Should be nDislike + 1.", nDislike + 1, c.getNdislike());
         assertNotEquals("Comment.getNlike() Should be nLike + 1.", lastUpdate, c.getLastUpdate());
 

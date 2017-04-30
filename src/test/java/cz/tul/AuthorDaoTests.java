@@ -1,7 +1,7 @@
 package cz.tul;
 
-import cz.tul.data.Autor;
-import cz.tul.service.AutorService;
+import cz.tul.data.Author;
+import cz.tul.service.AuthorService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,26 +19,26 @@ import static org.junit.Assert.assertEquals;
 @SpringApplicationConfiguration(classes = {Main.class})
 //@ActiveProfiles({"test"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AutorDaoTests {
+public class AuthorDaoTests {
 
     @Autowired
-    private AutorService autorService;
+    private AuthorService authorService;
 
     @Test
     public void testUsers() {
         LocalDateTime localDateTime = LocalDateTime.now();
-        Autor a = new Autor("Jarda JPA", localDateTime.getDayOfMonth()+"");
+        Author a = new Author("Jarda JPA", localDateTime.getDayOfMonth()+"");
 
-        List<Autor> autors = autorService.getAllAutors();
-        int nAutors = autors.size();
-        int key = autorService.create(a);
-        a.setAutor_id(key);
-        autors = autorService.getAllAutors();
+        List<Author> authors = authorService.getAllAuthors();
+        int nAuthors = authors.size();
+        int key = authorService.create(a);
+        a.setAuthorId(key);
+        authors = authorService.getAllAuthors();
 
-        assertEquals("Created user should be identical to retrieved user", nAutors + 1, autors.size());
+        assertEquals("Created user should be identical to retrieved user", nAuthors + 1, authors.size());
 
-        Autor a1 = autorService.getAutor(1);
-        assertEquals("Created user ID should be identical to retrieved user ID", a1.getAutor_id(), 1);
+        Author a1 = authorService.getAuthor(1);
+        assertEquals("Created user ID should be identical to retrieved user ID", a1.getAuthorId(), 1);
 
 
     }

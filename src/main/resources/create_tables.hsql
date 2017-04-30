@@ -2,7 +2,7 @@ CREATE TABLE picture (
 picture_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 url VARCHAR(255) NOT NULL,
 title VARCHAR(50) NOT NULL,
-autor_id INT(6) NOT NULL,
+author_id INT(6) NOT NULL,
 created VARCHAR(50) NOT NULL,
 lastUpdate VARCHAR(50),
 nlike INT(6) DEFAULT 0,
@@ -12,36 +12,36 @@ tags VARCHAR(255)
 
 CREATE TABLE comment (
 picture_id INT(6) UNSIGNED NOT NULL,
-autor_id INT(6) UNSIGNED NOT NULL,
+author_id INT(6) UNSIGNED NOT NULL,
 comment_id INT(6)  UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 text_comment VARCHAR(255) NOT NULL,
 title VARCHAR(50) NOT NULL,
-autor_comment_id INT(6) UNSIGNED,
+author_comment_id INT(6) UNSIGNED,
 created VARCHAR(50) NOT NULL,
 lastUpdate VARCHAR(50),
 nlike INT(6) DEFAULT 0,
 ndislike INT(6) DEFAULT 0
 ) ENGINE=INNODB;
 
-CREATE TABLE  autor_comment(
-autor_comment_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-autor_id INT(6) UNSIGNED NOT NULL,
+CREATE TABLE  author_comment(
+author_comment_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+author_id INT(6) UNSIGNED NOT NULL,
 comment_id INT(6) UNSIGNED NOT NULL
 ) ENGINE=INNODB;
 
-CREATE TABLE  autor(
-autor_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE  author(
+author_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(20) NOT NULL,
 registration VARCHAR(50) NOT NULL
 ) ENGINE=INNODB;
 
 
-ALTER TABLE  autor_comment add
-FOREIGN KEY (autor_id)
-        REFERENCES autor(autor_id)
+ALTER TABLE  author_comment add
+FOREIGN KEY (author_id)
+        REFERENCES author(author_id)
         ON DELETE CASCADE;
 
-ALTER TABLE  autor_comment add
+ALTER TABLE  author_comment add
 	FOREIGN KEY (comment_id)
         REFERENCES comment(comment_id)
         ON DELETE CASCADE;
@@ -52,6 +52,6 @@ FOREIGN KEY (picture_id)
         ON DELETE CASCADE;
 
 alter TABLE comment add
-FOREIGN KEY (autor_comment_id)
-        REFERENCES autor_comment(autor_comment_id)
+FOREIGN KEY (author_comment_id)
+        REFERENCES author_comment(author_comment_id)
         ON DELETE CASCADE;
