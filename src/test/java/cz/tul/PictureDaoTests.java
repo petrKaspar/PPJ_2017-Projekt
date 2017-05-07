@@ -11,7 +11,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -20,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Main.class})
-//@ActiveProfiles({"test"})
+@ActiveProfiles({"test"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PictureDaoTests {
 
@@ -28,7 +30,7 @@ public class PictureDaoTests {
     private PictureDao pictureDao;
 
     @Autowired
-    private AutorDao autorDao;
+    private AuthorDao authorDao;
 
     @Test
     public void Test1_createPicture() throws SQLException {
@@ -40,9 +42,10 @@ public class PictureDaoTests {
 //        Offer offer = new Offer(user, "This is a test offer.");
 
         OffsetDateTime odt = OffsetDateTime.now();
-        Picture picture = new Picture(2, "http://url.cz", "pokus 1", odt.toEpochSecond()+"");
-        Autor autor = autorDao.getAutor(2);
-        picture.setAutor(autor);
+//        Picture picture = new Picture(2, "http://url.cz", "pokus 1", odt.toEpochSecond()+"");
+        Picture picture = new Picture(2, "http://url.cz", "pokus 1", new Date());
+        Author author = authorDao.getAuthor(2);
+        picture.setAuthor(author);
 
         List<Picture> pictures = pictureDao.getPictures_innerjoin();
         assertEquals("Should be one offer in database.", pictures.size(), pictureDao.create(picture) - 1);
@@ -56,10 +59,10 @@ public class PictureDaoTests {
 
         List<Picture> pictures = pictureDao.getPictures_innerjoin();
 
-        int lastImage = pictures.get(pictures.size()-1).getPicture_id();
+        int lastImage = pictures.get(pictures.size()-1).getPictureId();
         int nLike = pictures.get(pictures.size()-1).getNlike();
         int nDislike = pictures.get(pictures.size()-1).getNdislike();
-        String lastUpdate = pictures.get(pictures.size()-1).getLastUpdate();
+        Date lastUpdate = pictures.get(pictures.size()-1).getLastUpdate();
 
         pictureDao.incrementNLike(lastImage);
         pictureDao.incrementNDislike(lastImage);
@@ -81,17 +84,18 @@ public class PictureDaoTests {
         System.out.println("pictures.size() = " + pictures.size());
 
         OffsetDateTime odt = OffsetDateTime.now();;
-        Picture picture = new Picture(2, "http://url.cz", "pokus 1", odt.toEpochSecond()+"");
-        Autor autor = autorDao.getAutor(2);
-        picture.setAutor(autor);
+//        Picture picture = new Picture(2, "http://url.cz", "pokus 1", odt.toEpochSecond()+"");
+        Picture picture = new Picture(2, "http://url.cz", "pokus 1", new Date());
+        Author author = authorDao.getAuthor(2);
+        picture.setAuthor(author);
 
-        System.out.println(picture.getAutor().getAutor_id());
-        System.out.println(pictures.get(pictures.size()-1).getAutor_id());
-        System.out.println(pictures.get(pictures.size()-1).getAutor().getAutor_id());
-        System.out.println(picture.getAutor().getname());
-        System.out.println(pictures.get(pictures.size()-1).getAutor().getname());
-        System.out.println(picture.getAutor().getRegistration());
-        System.out.println(pictures.get(pictures.size()-1).getAutor().getRegistration());
+        System.out.println(picture.getAuthor().getAuthorId());
+        System.out.println(pictures.get(pictures.size()-1).getAuthorId());
+        System.out.println(pictures.get(pictures.size()-1).getAuthor().getAuthorId());
+        System.out.println(picture.getAuthor().getname());
+        System.out.println(pictures.get(pictures.size()-1).getAuthor().getname());
+        System.out.println(picture.getAuthor().getRegistration());
+        System.out.println(pictures.get(pictures.size()-1).getAuthor().getRegistration());
 
         assertEquals("Should be one offer in database.", pictures.size(), pictures.size());
 

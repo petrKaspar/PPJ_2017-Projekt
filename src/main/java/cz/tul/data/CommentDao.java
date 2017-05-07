@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,9 +28,9 @@ public class CommentDao {
         BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(comment);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        boolean b = jdbc.update("insert into comment (picture_id, autor_id, text_comment, title, created) " +
-                        "values (:picture_id, :autor_id, :text_comment, :title, :created)",
-                params, keyHolder, new String[]{"ID"}) == 1;
+        boolean b = jdbc.update("insert into comment (pictureId, authorId, commentText, title, created) " +
+                        "values (:pictureId, :authorId, :commentText, :title, :created)",
+                params, keyHolder) == 1;
 
         System.out.println("insert withou errors: " + b);
         System.out.println("keyHolder.getKey() = " + keyHolder.getKey());
@@ -43,8 +44,8 @@ public class CommentDao {
 
         BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(comment);
 
-        return jdbc.update("insert into comment (picture_id, autor_id, text_comment, title, created) " +
-                        "values (:picture_id, :autor_id, :text_comment, :title, :created)", params) == 1;
+        return jdbc.update("insert into comment (pictureId, authorId, commentText, title, created) " +
+                        "values (:pictureId, :authorId, :commentText, :title, :created)", params) == 1;
 
     }
 
@@ -53,30 +54,30 @@ public class CommentDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
 
-        return jdbc.queryForObject("select * from comment, autor where comment.autor_id=autor.autor_id and comment_id=:id", params,
+        return jdbc.queryForObject("select * from comment, author where comment.authorId=author.authorId and commentId=:id", params,
                 new RowMapper<Comment>() {
 
                     public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        Autor autor = new Autor();
-                        autor.setAutor_id(rs.getInt("autor_id"));
-                        autor.setname(rs.getString("name"));
-                        autor.setRegistration(rs.getString("registration"));
+                        Author author = new Author();
+                        author.setAuthorId(rs.getInt("authorId"));
+                        author.setname(rs.getString("name"));
+                        author.setRegistration(rs.getDate("registration"));
 
 //                            Picture picture = new Picture();
-//                            autor.setAutor_id(rs.getInt("autor_id"));
-//                            autor.setname(rs.getString("name"));
-//                            autor.setRegistration(rs.getString("registration"));
+//                            author.setAuthorId(rs.getInt("authorId"));
+//                            author.setname(rs.getString("name"));
+//                            author.setRegistration(rs.getString("registration"));
 
                         Comment comment = new Comment();
-                        comment.setPicture_id(rs.getInt("picture_id"));
-                        comment.setAutor_id(rs.getInt("autor_id"));
-                        comment.setText_comment(rs.getString("text_comment"));
+                        comment.setPictureId(rs.getInt("pictureId"));
+                        comment.setAuthorId(rs.getInt("authorId"));
+                        comment.setCommentText(rs.getString("commentText"));
                         comment.settitle(rs.getString("title"));
-                        comment.setCreated(rs.getString("created"));
-                        comment.setLastUpdate(rs.getString("lastUpdate"));
+                        comment.setCreated(rs.getDate("created"));
+                        comment.setLastUpdate(rs.getDate("lastUpdate"));
                         comment.setNlike(rs.getInt("nlike"));
                         comment.setNdislike(rs.getInt("ndislike"));
-                        comment.setAutor(autor);
+                        comment.setAuthor(author);
 //                            comment.setPicture(picture);
 
                         return comment;
@@ -88,28 +89,28 @@ public class CommentDao {
     public List<Comment> getComments_innerjoin() {
 
         return jdbc
-                .query("select * from comment join autor using (autor_id)",
+                .query("select * from comment join author using (authorId)",
                         (ResultSet rs, int rowNum) -> {
-                            Autor autor = new Autor();
-                            autor.setAutor_id(rs.getInt("autor_id"));
-                            autor.setname(rs.getString("name"));
-                            autor.setRegistration(rs.getString("registration"));
+                            Author author = new Author();
+                            author.setAuthorId(rs.getInt("authorId"));
+                            author.setname(rs.getString("name"));
+                            author.setRegistration(rs.getDate("registration"));
 
 //                            Picture picture = new Picture();
-//                            autor.setAutor_id(rs.getInt("autor_id"));
-//                            autor.setname(rs.getString("name"));
-//                            autor.setRegistration(rs.getString("registration"));
+//                            author.setAuthorId(rs.getInt("authorId"));
+//                            author.setname(rs.getString("name"));
+//                            author.setRegistration(rs.getString("registration"));
 
                             Comment comment = new Comment();
-                            comment.setPicture_id(rs.getInt("picture_id"));
-                            comment.setAutor_id(rs.getInt("autor_id"));
-                            comment.setText_comment(rs.getString("text_comment"));
+                            comment.setPictureId(rs.getInt("pictureId"));
+                            comment.setAuthorId(rs.getInt("authorId"));
+                            comment.setCommentText(rs.getString("commentText"));
                             comment.settitle(rs.getString("title"));
-                            comment.setCreated(rs.getString("created"));
-                            comment.setLastUpdate(rs.getString("lastUpdate"));
+                            comment.setCreated(rs.getDate("created"));
+                            comment.setLastUpdate(rs.getDate("lastUpdate"));
                             comment.setNlike(rs.getInt("nlike"));
                             comment.setNdislike(rs.getInt("ndislike"));
-                            comment.setAutor(autor);
+                            comment.setAuthor(author);
 //                            comment.setPicture(picture);
 
                             return comment;
@@ -120,21 +121,21 @@ public class CommentDao {
     public boolean incrementNLike(int id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
-        params.addValue("lastUpdate", odt.toEpochSecond()+"");
+        params.addValue("lastUpdate", new Date());
 
-        System.out.printf("update comment set nlike = nlike + 1 where comment_id=:id", params);
+        System.out.printf("update comment set nlike = nlike + 1 where commentId=:id", params);
         return jdbc.update("update comment set nlike = nlike + 1, " +
-                "lastUpdate = :lastUpdate where comment_id=:id", params) == 1;
+                "lastUpdate = :lastUpdate where commentId=:id", params) == 1;
     }
 
     public boolean incrementNDislike(int id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
-        params.addValue("lastUpdate", odt.toEpochSecond()+"");
+        params.addValue("lastUpdate", new Date());
 
-        System.out.printf("update picture set ndislike = ndislike + 1lastUpdate = :lastUpdate where comment_id=:id", params);
+        System.out.printf("update picture set ndislike = ndislike + 1lastUpdate = :lastUpdate where commentId=:id", params);
         return jdbc.update("update comment set ndislike = ndislike + 1, " +
-                "lastUpdate = :lastUpdate where comment_id=:id", params) == 1;
+                "lastUpdate = :lastUpdate where commentId=:id", params) == 1;
     }
 
 

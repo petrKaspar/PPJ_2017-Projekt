@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Main.class})
-//@ActiveProfiles({"test"})
+@ActiveProfiles({"test"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CommentDaoTests {
 
@@ -28,7 +29,7 @@ public class CommentDaoTests {
     private PictureDao pictureDao;
 
     @Autowired
-    private AutorDao autorDao;
+    private AuthorDao authorDao;
 
     @Autowired
     private CommentDao commentDao;
@@ -37,10 +38,10 @@ public class CommentDaoTests {
     public void Test1_createComment() throws SQLException {
 
         OffsetDateTime odt = OffsetDateTime.now();
-        //int picture_id, int autor_id, String text_comment, String title, String created
-        Comment comment = new Comment(1, 2, "text komentare", "Titulek komentare",odt.toEpochSecond()+"");
-        Autor autor = autorDao.getAutor(2);
-        comment.setAutor(autor);
+        //int pictureId, int authorId, String commentText, String title, String created
+        Comment comment = new Comment(1, 2, "text komentare", "Titulek komentare", new Date());
+        Author author = authorDao.getAuthor(2);
+        comment.setAuthor(author);
 
         assertTrue("Offer creation should return true", commentDao.createBool(comment));
         
@@ -55,10 +56,10 @@ public class CommentDaoTests {
 
         List<Comment> comments = commentDao.getComments_innerjoin();
 
-        int lastComment = comments.get(comments.size()-1).getPicture_id();
+        int lastComment = comments.get(comments.size()-1).getPictureId();
         int nLike = comments.get(comments.size()-1).getNlike();
         int nDislike = comments.get(comments.size()-1).getNdislike();
-        String lastUpdate = comments.get(comments.size()-1).getLastUpdate();
+        Date lastUpdate = comments.get(comments.size()-1).getLastUpdate();
 
         commentDao.incrementNLike(lastComment);
         commentDao.incrementNDislike(lastComment);

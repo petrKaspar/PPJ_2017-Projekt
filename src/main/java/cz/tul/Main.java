@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
 import java.time.*;
-
-import static org.junit.Assert.assertTrue;
+import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 public class Main {
@@ -26,8 +26,8 @@ public class Main {
     }
 
     @Bean
-    public AutorDao autorDao() {
-        return new AutorDao();
+    public AuthorDao authorDao() {
+        return new AuthorDao();
     }
 
     @Bean
@@ -43,19 +43,20 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        SpringApplication app = new SpringApplication(Main.class);
+        ApplicationContext ctx = app.run(args);
 
         OffsetTime ot1 = OffsetTime.now();
-        OffsetDateTime a = OffsetDateTime.now();
-        System.out.println("Current  offset  time: " + a);
-        System.out.println("Current  offset  time: " + a.toEpochSecond());
+//        OffsetDateTime a = OffsetDateTime.now();
+//        System.out.println("Current  offset  time: " + a);
+//        System.out.println("Current  offset  time: " + a.toEpochSecond());
 
         System.out.println(Instant.now().toEpochMilli()+ot1.getSecond());
 
 //        Provisioner p = new Provisioner();
 //        p.doProvision();
 
-        SpringApplication app = new SpringApplication(Main.class);
-        ApplicationContext ctx = app.run(args);
+
 
 //        UsersDao usersDao = ctx.getBean(UsersDao.class);
 //
@@ -69,18 +70,36 @@ public class Main {
 //       testovaciDao.incrementPpocet(5);
 //        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        OffsetDateTime odt = OffsetDateTime.now();;
+        OffsetDateTime odt = OffsetDateTime.now();
+
+        AuthorDao authorDao = ctx.getBean(AuthorDao.class);
+        Author a = new Author("Franta", new Date());
+        int key = authorDao.create(a);
+        key = authorDao.create(a);
+        key = authorDao.create(a);
+        key = authorDao.create(a);
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        System.out.println(key);
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        System.out.println(authorDao.getAuthor(key).toString());
+
+
         PictureDao pictureDao = ctx.getBean(PictureDao.class);
-        Picture picture = new Picture(2, "http://url.cz", "pokus 1", odt.toEpochSecond()+"");
-        pictureDao.create(picture);
-        pictureDao.incrementNLike(1);
-        pictureDao.incrementNDislike(1);
+        Picture picture = new Picture(key, "http://url.cz", "pokus 1", new Date());
+        int keyPicture = pictureDao.create(picture);
+        pictureDao.incrementNLike(keyPicture);
+        pictureDao.incrementNDislike(keyPicture);
+        System.out.println("-----------------------------------------");
+        List<Picture> pictures = pictureDao.getPictures_innerjoin();
+        // Get the offer with ID filled in.
+//        Picture picture = pictures.get(0);
+        System.out.println("pictures.size() = " + pictures.size());
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //        PictureDao pictureDao = ctx.getBean(PictureDao.class);
 //        Picture picture = pictureDao.getPicture(2);
 //        System.out.println(picture.toString());
-//        System.out.println(picture.getAutor().getname());
+//        System.out.println(picture.getAuthor().getname());
 
 //        List...pictureDao.getPictures_innerjoin();
 

@@ -1,34 +1,37 @@
 package cz.tul.data;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
  * Created by Petr on 03.04.2017.
  */
 public class Picture {
 
-    private int picture_id;
-    private int autor_id;
+    private int pictureId;
+    private int authorId;
 
     private String url;
     private String title;
-    private String created;
-    private String lastUpdate;
+    private Date created;
+    private Date lastUpdate;
     private String tags;
 
     private int nlike;
     private int ndislike;
 
-    private Autor autor;
+    private Author author;
 
-    public Autor getAutor() {
-        return autor;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
-    public Picture(Autor autor, String url, String title, String created){
-        this.autor = autor;
+    public Picture(Author author, String url, String title, Date created){
+        this.author = author;
         this.url = url;
         this.title = title;
         this.created = created;
@@ -37,19 +40,19 @@ public class Picture {
     public Picture() {
     }
 
-    public Picture(int autor_id, String url, String title, String created) {
-        this.autor_id = autor_id;
+    public Picture(int authorId, String url, String title, Date created) {
+        this.authorId = authorId;
         this.url = url;
         this.title = title;
         this.created = created;
     }
 
-    public void setPicture_id(int picture_id) {
-        this.picture_id = picture_id;
+    public void setPictureId(int pictureId) {
+        this.pictureId = pictureId;
     }
 
-    public void setAutor_id(int autor_id) {
-        this.autor_id = autor_id;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public void setUrl(String url) {
@@ -60,11 +63,11 @@ public class Picture {
         this.title = title;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
-    public void setLastUpdate(String lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -76,12 +79,12 @@ public class Picture {
         this.ndislike = ndislike;
     }
 
-    public int getPicture_id() {
-        return picture_id;
+    public int getPictureId() {
+        return pictureId;
     }
 
-    public int getAutor_id() {
-        return autor_id;
+    public int getAuthorId() {
+        return authorId;
     }
 
     public String getUrl() {
@@ -92,11 +95,11 @@ public class Picture {
         return title;
     }
 
-    public String getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public String getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
@@ -119,8 +122,8 @@ public class Picture {
     @Override
     public String toString() {
         return "Picture{" +
-                "picture_id=" + picture_id +
-                ", autor_id=" + autor_id +
+                "pictureId=" + pictureId +
+                ", authorId=" + authorId +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
                 ", created='" + created + '\'' +
@@ -128,7 +131,7 @@ public class Picture {
                 ", tags='" + tags + '\'' +
                 ", nlike=" + nlike +
                 ", ndislike=" + ndislike +
-                ", autor=" + autor +
+                ", author=" + author +
                 '}';
     }
 

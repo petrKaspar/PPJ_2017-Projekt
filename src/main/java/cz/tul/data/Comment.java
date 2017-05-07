@@ -1,38 +1,40 @@
 package cz.tul.data;
 
+import java.util.Date;
+
 /**
  * Created by Petr on 03.04.2017.
  */
 public class Comment {
 
-    private int comment_id;
-    private int picture_id;
-    private int autor_id;
-    private int autor_comment_id;
+    private int commentId;
+    private int pictureId;
+    private int authorId;
+    private int authorCommentId;
 
-    private String text_comment;
+    private String commentText;
     private String title;
-    private String created;
-    private String lastUpdate;
+    private Date created;
+    private Date lastUpdate;
 
     private int nlike;
     private int ndislike;
 
-    private Autor autor;
+    private Author author;
     private Picture picture;
 
-    public Comment(int picture_id, int autor_id, String text_comment, String title, String created) {
-        this.picture_id = picture_id;
-        this.autor_id = autor_id;
-        this.text_comment = text_comment;
+    public Comment(int pictureId, int authorId, String commentText, String title, Date created) {
+        this.pictureId = pictureId;
+        this.authorId = authorId;
+        this.commentText = commentText;
         this.title = title;
         this.created = created;
     }
 
-    public Comment(Picture picture, Autor autor, String text_comment, String title, String created) {
+    public Comment(Picture picture, Author author, String commentText, String title, Date created) {
         this.picture = picture;
-        this.autor = autor;
-        this.text_comment = text_comment;
+        this.author = author;
+        this.commentText = commentText;
         this.title = title;
         this.created = created;
     }
@@ -40,28 +42,28 @@ public class Comment {
     public Comment() {
     }
 
-    public int getcomment_id() {
-        return comment_id;
+    public int getcommentId() {
+        return commentId;
     }
 
-    public void setcomment_id(int comment_id) {
-        this.comment_id = comment_id;
+    public void setcommentId(int commentId) {
+        this.commentId = commentId;
     }
 
-    public int getAutor_comment_id() {
-        return autor_comment_id;
+    public int getAuthorCommentId() {
+        return authorCommentId;
     }
 
-    public void setAutor_comment_id(int autor_comment_id) {
-        this.autor_comment_id = autor_comment_id;
+    public void setAuthorCommentId(int authorCommentId) {
+        this.authorCommentId = authorCommentId;
     }
 
-    public String getText_comment() {
-        return text_comment;
+    public String getCommentText() {
+        return commentText;
     }
 
-    public void setText_comment(String text_comment) {
-        this.text_comment = text_comment;
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
     }
 
     public String gettitle() {
@@ -72,19 +74,19 @@ public class Comment {
         this.title = title;
     }
 
-    public String getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
-    public String getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(String lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -104,28 +106,28 @@ public class Comment {
         this.ndislike = ndislike;
     }
 
-    public int getAutor_id() {
-        return autor_id;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAutor_id(int autor_id) {
-        this.autor_id = autor_id;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
-    public int getPicture_id() {
-        return picture_id;
+    public int getPictureId() {
+        return pictureId;
     }
 
-    public void setPicture_id(int picture_id) {
-        this.picture_id = picture_id;
+    public void setPictureId(int pictureId) {
+        this.pictureId = pictureId;
     }
 
-    public Autor getAutor() {
-        return autor;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public Picture getPicture() {

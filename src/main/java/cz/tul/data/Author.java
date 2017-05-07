@@ -7,16 +7,16 @@ import java.util.Date;
 /**
  * Created by Petr on 09.04.2017.
  */
-public class Autor {
+public class Author {
 
-    private int autor_id;
+    private int authorId;
 
     private String name;
-    private String registration;
+    private Date registration;
 
-    public Autor(){    }
+    public Author(){    }
 
-    public Autor(String name, String registration) {
+    public Author(String name, Date registration) {
         this.name = name;
         this.registration = registration;
     }
@@ -29,29 +29,29 @@ public class Autor {
         this.name = name;
     }
 
-    public String getRegistration() {
+    public Date getRegistration() {
         return registration;
     }
 
-    public void setRegistration(String registration) {
+    public void setRegistration(Date registration) {
         this.registration = registration;
     }
 
 
-    public int getAutor_id() {
-        return autor_id;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAutor_id(int autor_id) {
-        this.autor_id = autor_id;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     @Override
     public String toString() {
-        return "Autor{" +
-                "autor_id=" + autor_id +
+        return "Author{" +
+                "authorId=" + authorId +
                 ", name='" + name + '\'' +
-                ", registration='" + Instant.ofEpochSecond(new Long(registration)) + '\'' +
+                ", registration='" + (registration) + '\'' +
                 '}';
     }
 }

@@ -11,9 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,9 +33,9 @@ public class PictureDao {
                 picture);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        boolean b = jdbc.update("insert into picture (autor_id, url, title, created) " +
-                        "values (:autor_id, :url, :title, :created)",
-                params, keyHolder, new String[]{"ID"}) == 1;
+        boolean b = jdbc.update("insert into picture (authorId, url, title, created) " +
+                        "values (:authorId, :url, :title, :created)",
+                params, keyHolder) == 1;
 
         System.out.println("b = " + b);
         System.out.println("keyHolder.getKey() = " + keyHolder.getKey());
@@ -41,61 +43,62 @@ public class PictureDao {
         if (b == false) return 0;
         return keyHolder.getKey().intValue();
 
-//        System.out.printf("insert into picture (autor_id, url, title, created) values (:autor_id, :url, :title, :created)",params);
+//        System.out.printf("insert into picture (authorId, url, title, created) values (:authorId, :url, :title, :created)",params);
 //        return jdbc
-//                .update("insert into picture (autor_id, url, title, created) values (:autor_id, :url, :title, :created)",
+//                .update("insert into picture (authorId, url, title, created) values (:authorId, :url, :title, :created)",
 //                        params) == 1;
     }
 
     public boolean incrementNLike(int id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
-        params.addValue("lastUpdate", odt.toEpochSecond()+"");
+        params.addValue("lastUpdate", new Date());
 
-        System.out.printf("update picture set nlike = nlike + 1 where picture_id=:id", params);
+        System.out.printf("update picture set nlike = nlike + 1 where pictureId=:id", params);
         return jdbc.update("update picture set nlike = nlike + 1, " +
-                "lastUpdate = :lastUpdate where picture_id=:id", params) == 1;
+                "lastUpdate = :lastUpdate where pictureId=:id", params) == 1;
     }
 
     public boolean incrementNDislike(int id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
-        params.addValue("lastUpdate", odt.toEpochSecond()+"");
+        params.addValue("lastUpdate", new Date());
 
-        System.out.printf("update picture set ndislike = ndislike + 1lastUpdate = :lastUpdate where picture_id=:id", params);
+        System.out.printf("update picture set ndislike = ndislike + 1lastUpdate = :lastUpdate where pictureId=:id", params);
         return jdbc.update("update picture set ndislike = ndislike + 1, " +
-                "lastUpdate = :lastUpdate where picture_id=:id", params) == 1;
+                "lastUpdate = :lastUpdate where pictureId=:id", params) == 1;
     }
 
     public boolean setLastUpdate(int id) {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
-        params.addValue("lastUpdate", odt.toEpochSecond()+"");
+        params.addValue("lastUpdate", new Date());
 
-        System.out.printf("update picture set nlike = nlike + 1 where picture_id=:id", params);
-        return jdbc.update("update picture set lastUpdate = :lastUpdate where picture_id=:id", params) == 1;
+        System.out.printf("update picture set nlike = nlike + 1 where pictureId=:id", params);
+        return jdbc.update("update picture set lastUpdate = :lastUpdate where pictureId=:id", params) == 1;
     }
 
     public List<Picture> getPictures_innerjoin() {
 
         return jdbc
-                .query("select * from picture join autor using (autor_id)",
+                .query("select * from picture join author using (authorId)",
                         (ResultSet rs, int rowNum) -> {
-                            Autor autor = new Autor();
-                            autor.setAutor_id(rs.getInt("autor_id"));
-                            autor.setname(rs.getString("name"));
-                            autor.setRegistration(rs.getString("registration"));
+                            Author author = new Author();
+                            author.setAuthorId(rs.getInt("authorId"));
+                            author.setname(rs.getString("name"));
+                            author.setRegistration(rs.getDate("registration"));
 
                             Picture picture = new Picture();
-                            picture.setPicture_id(rs.getInt("picture_id"));
-                            picture.setAutor_id(rs.getInt("autor_id"));
+                            picture.setPictureId(rs.getInt("pictureId"));
+                            picture.setAuthorId(rs.getInt("authorId"));
                             picture.setUrl(rs.getString("url"));
                             picture.settitle(rs.getString("title"));
-                            picture.setCreated(rs.getString("created"));
-                            picture.setLastUpdate(rs.getString("lastUpdate"));
+                            picture.setCreated(rs.getDate("created"));
+//                            picture.setLastUpdate(LocalDateTime.parse(rs.getString("lastUpdate")));
+                            picture.setLastUpdate(rs.getDate("lastUpdate"));
                             picture.setNlike(rs.getInt("nlike"));
                             picture.setNdislike(rs.getInt("ndislike"));
-                            picture.setAutor(autor);
+                            picture.setAuthor(author);
 
                             return picture;
                         }
@@ -108,25 +111,25 @@ public class PictureDao {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("id", id);
 
-        return jdbc.queryForObject("select * from picture, autor where picture.autor_id=autor.autor_id and picture_id=:id", params,
+        return jdbc.queryForObject("select * from picture, author where picture.authorId=author.authorId and pictureId=:id", params,
                 new RowMapper<Picture>() {
 
                     public Picture mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        Autor autor = new Autor();
-                        autor.setAutor_id(rs.getInt("autor_id"));
-                        autor.setname(rs.getString("name"));
-                        autor.setRegistration(rs.getString("registration"));
+                        Author author = new Author();
+                        author.setAuthorId(rs.getInt("authorId"));
+                        author.setname(rs.getString("name"));
+                        author.setRegistration(rs.getDate("registration"));
 
                         Picture picture = new Picture();
-                        picture.setPicture_id(rs.getInt("picture_id"));
-                        picture.setAutor_id(rs.getInt("autor_id"));
+                        picture.setPictureId(rs.getInt("pictureId"));
+                        picture.setAuthorId(rs.getInt("authorId"));
                         picture.setUrl(rs.getString("url"));
                         picture.settitle(rs.getString("title"));
-                        picture.setCreated(rs.getString("created"));
-                        picture.setLastUpdate(rs.getString("lastUpdate"));
+                        picture.setCreated(rs.getDate("created"));
+                        picture.setLastUpdate(rs.getDate("lastUpdate"));
                         picture.setNlike(rs.getInt("nlike"));
                         picture.setNdislike(rs.getInt("ndislike"));
-                        picture.setAutor(autor);
+                        picture.setAuthor(author);
 
                         return picture;
                     }
