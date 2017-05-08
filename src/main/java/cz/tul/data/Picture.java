@@ -11,10 +11,8 @@ public class Picture {
 
     @Id
     @GeneratedValue
-    @Column(name = "picture_id")
-    private int picture_id;
-
-//    private int autor_id;
+    @Column(name = "pictureId")
+    private int pictureId;
 
     private String url;
     private String title;
@@ -29,25 +27,20 @@ public class Picture {
     private int ndislike;
 
 
-    //@Column(name = "autor")
     @OneToOne
-    @JoinColumn(name = "autor_id")
-    private Autor autor;
+    @JoinColumn(name = "authorId")
+    private Author author;
 
-//    @OneToOne
-//    @JoinColumn(name = "comment_id")
-//    private Comment comment;
-
-    public Autor getAutor() {
-        return autor;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
-    public Picture(Autor autor, String url, String title, String created){
-        this.autor = autor;
+    public Picture(Author author, String url, String title, String created){
+        this.author = author;
         this.url = url;
         this.title = title;
         this.created = created;
@@ -56,26 +49,21 @@ public class Picture {
     public Picture() {
     }
 
-    public Picture(int autor_id, String url, String title, String created) {
-//        this.autor_id = autor_id;
+    public Picture(String url, String title, String created) {
         this.url = url;
         this.title = title;
         this.created = created;
     }
 
-    public void setPicture_id(int picture_id) {
-        this.picture_id = picture_id;
+    public void setPictureId(int pictureId) {
+        this.pictureId = pictureId;
     }
-
-//    public void setAutor_id(int autor_id) {
-//        this.autor_id = autor_id;
-//    }
 
     public void setUrl(String url) {
         this.url = url;
     }
 
-    public void settitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -95,19 +83,15 @@ public class Picture {
         this.ndislike = ndislike;
     }
 
-    public int getPicture_id() {
-        return picture_id;
+    public int getPictureId() {
+        return pictureId;
     }
-
-//    public int getAutor_id() {
-//        return autor_id;
-//    }
 
     public String getUrl() {
         return url;
     }
 
-    public String gettitle() {
+    public String getTitle() {
         return title;
     }
 
@@ -138,8 +122,7 @@ public class Picture {
     @Override
     public String toString() {
         return "Picture{" +
-                "picture_id=" + picture_id +
-//                ", autor_id=" + autor_id +
+                "pictureId=" + pictureId +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
                 ", created='" + created + '\'' +
@@ -147,27 +130,9 @@ public class Picture {
                 ", tags='" + tags + '\'' +
                 ", nlike=" + nlike +
                 ", ndislike=" + ndislike +
-                ", autor=" + autor +
+                ", author=" + author +
                 '}';
     }
-
-    //    private User user;
-//
-//    public Picture() {
-//
-//    }
-//
-//    public Picture(User user, String text) {
-//        this.user = user;
-//        this.text = text;
-//    }
-//
-//    public Picture(int id, User user, String text) {
-//        this.id = id;
-//        this.user = user;
-//        this.text = text;
-//    }
-
 
 
 

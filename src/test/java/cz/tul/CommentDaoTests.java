@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Main.class})
-//@ActiveProfiles({"test"})
+@ActiveProfiles({"test"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CommentDaoTests {
 
@@ -28,7 +28,7 @@ public class CommentDaoTests {
     private PictureDao pictureDao;
 
     @Autowired
-    private AutorDao autorDao;
+    private AuthorDao authorDao;
 
     @Autowired
     private CommentDao commentDao;
@@ -37,14 +37,12 @@ public class CommentDaoTests {
     public void Test1_createComment() throws SQLException {
 
         OffsetDateTime odt = OffsetDateTime.now();
-        //int picture_id, int autor_id, String text_comment, String title, String created
-        Comment comment = new Comment(1, 2, "Hibernate text komentare", "Titulek Hibernate",odt.toEpochSecond()+"");
-        Autor autor = autorDao.getAutor(2);
+        Comment comment = new Comment("Hibernate text komentare", "Titulek Hibernate",odt.toEpochSecond()+"");
+        Author author = authorDao.getAuthor(2);
         Picture p3 = pictureDao.getPicture(5);
 
-        comment.setAutor(autor);
+        comment.setAuthor(author);
         comment.setPicture(p3);
-//        assertTrue("Offer creation should return true", commentDao.createBool(comment));
 
         List<Comment> comments = commentDao.getAllComments();
         assertEquals("Should be one Comment in database.", comments.size(), commentDao.create(comment) - 1);
@@ -57,13 +55,12 @@ public class CommentDaoTests {
 
         List<Comment> comments = commentDao.getAllComments();
 
-        int lastComment = comments.get(comments.size()-1).getcomment_id();
+        int lastComment = comments.get(comments.size()-1).getcommentId();
         System.out.println(lastComment+"aaaaaaaaaaaaaaa");
         int nLike = comments.get(comments.size()-1).getNlike();
         int nDislike = comments.get(comments.size()-1).getNdislike();
         String lastUpdate = comments.get(comments.size()-1).getLastUpdate();
 
-        System.out.println(commentDao.incrementNLike(lastComment));;
         commentDao.incrementNDislike(lastComment);
 
         Comment c = commentDao.getComment(lastComment);

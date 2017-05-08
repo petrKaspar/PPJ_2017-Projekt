@@ -9,29 +9,29 @@ import java.util.Date;
  * Created by Petr on 09.04.2017.
  */
 @Entity
-@Table(name = "autor")
-public class Autor {
+@Table(name = "author")
+public class Author {
 
     @Id
     @GeneratedValue
-    @Column(name = "autor_id")
-    private int autor_id;
+    @Column(name = "authorId")
+    private int authorId;
 
     private String name;
     private String registration;
 
-    public Autor(){    }
+    public Author(){    }
 
-    public Autor(String name, String registration) {
+    public Author(String name, String registration) {
         this.name = name;
         this.registration = registration;
     }
 
-    public String getname() {
+    public String getName() {
         return name;
     }
 
-    public void setname(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -44,18 +44,18 @@ public class Autor {
     }
 
 
-    public int getAutor_id() {
-        return autor_id;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setAutor_id(int autor_id) {
-        this.autor_id = autor_id;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     @Override
     public String toString() {
-        return "Autor{" +
-                "autor_id=" + autor_id +
+        return "Author{" +
+                "authorId=" + authorId +
                 ", name='" + name + '\'' +
                 ", registration='" + Instant.ofEpochSecond(new Long(registration)) + '\'' +
                 '}';

@@ -25,17 +25,12 @@ public class Provisioner {
     public void doProvision() {
 
         List<String> allTables;
-
-        allTables = namedParameterJdbcOperations.getJdbcOperations().queryForList("SELECT TABLE_NAME FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='ppj'", String.class);
-        System.out.println("allTables.name = " + allTables);
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        if (!allTables.contains("OFFERS")) {
+        allTables = namedParameterJdbcOperations.getJdbcOperations().queryForList("SELECT TABLE_NAME FROM  INFORMATION_SCHEMA.TABLES", String.class);
+        if (!allTables.contains("PICTURE")) {
             log.warn("DB Provisioner: No tables exist and will be created");
-//            createDb();
-            allTables = namedParameterJdbcOperations.getJdbcOperations().queryForList("SELECT TABLE_NAME FROM  INFORMATION_SCHEMA.TABLES", String.class);
-            System.out.println(allTables);
+            createDb();
         } else
-            log.info("DB Provisioner: Table OFFERS exists, all existing tables: " + allTables);
+            log.info("DB Provisioner: Table PICTURE exists, all existing tables: " + allTables);
     }
 
     public void createDb() {

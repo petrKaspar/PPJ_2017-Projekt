@@ -73,9 +73,9 @@ public class TestovaciDao {
     public boolean create(Testovaci testovaci) {
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-//        params.addValue("title", testovaci.gettitle());
+//        params.addValue("title", testovaci.getTitle());
 //        params.addValue("pocet", testovaci.getPocet());
-//        params.addValue("name", testovaci.getname());
+//        params.addValue("name", testovaci.getName());
 
         params.addValue("title", "asdf");
         params.addValue("pocet", 666);
