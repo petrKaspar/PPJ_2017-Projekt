@@ -28,10 +28,6 @@ public class TestovaciDaoTests {
 
     @Test
     public void testTestovaci() {
-        System.out.println("tttttttttttttttttttttttt");
-        System.out.println(testovaciService.getAllTestovaci());
-        System.out.println("tttttttttttttttttttttttt");
-//        testovaciService.deleteTestovaci(7);
 
        Testovaci testovaci = new Testovaci("Testovani JPA", 123, "Petr JPA test");
 

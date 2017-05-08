@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ import static org.junit.Assert.assertNotEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Main.class})
-//@ActiveProfiles({"test"})
+@ActiveProfiles({"test"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CommentDaoTests {
 
@@ -38,7 +39,7 @@ public class CommentDaoTests {
     public void Test1_createComment() throws SQLException {
 
         OffsetDateTime odt = OffsetDateTime.now();
-        Comment comment = new Comment(1, 2, "Hibernate text komentare", "Titulek Hibernate",odt.toEpochSecond()+"");
+        Comment comment = new Comment("Hibernate text komentare", "Titulek Hibernate",odt.toEpochSecond()+"");
         Author author = authorService.getAuthor(2);
         Picture p3 = pictureService.getPicture(5);
 

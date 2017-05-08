@@ -29,14 +29,9 @@ public class Picture {
     private int ndislike;
 
 
-    //@Column(name = "author")
     @OneToOne
     @JoinColumn(name = "author_id")
     private Author author;
-
-//    @OneToOne
-//    @JoinColumn(name = "commentId")
-//    private Comment comment;
 
     public Author getAuthor() {
         return author;
@@ -56,8 +51,7 @@ public class Picture {
     public Picture() {
     }
 
-    public Picture(int authorId, String url, String title, String created) {
-//        this.authorId = authorId;
+    public Picture(String url, String title, String created) {
         this.url = url;
         this.title = title;
         this.created = created;
@@ -66,10 +60,6 @@ public class Picture {
     public void setPictureId(int pictureId) {
         this.pictureId = pictureId;
     }
-
-//    public void setAuthorId(int authorId) {
-//        this.authorId = authorId;
-//    }
 
     public void setUrl(String url) {
         this.url = url;
@@ -98,10 +88,6 @@ public class Picture {
     public int getPictureId() {
         return pictureId;
     }
-
-//    public int getAuthorId() {
-//        return authorId;
-//    }
 
     public String getUrl() {
         return url;
@@ -139,7 +125,6 @@ public class Picture {
     public String toString() {
         return "Picture{" +
                 "pictureId=" + pictureId +
-//                ", authorId=" + authorId +
                 ", url='" + url + '\'' +
                 ", title='" + title + '\'' +
                 ", created='" + created + '\'' +
@@ -150,23 +135,6 @@ public class Picture {
                 ", author=" + author +
                 '}';
     }
-
-    //    private User user;
-//
-//    public Picture() {
-//
-//    }
-//
-//    public Picture(User user, String text) {
-//        this.user = user;
-//        this.text = text;
-//    }
-//
-//    public Picture(int id, User user, String text) {
-//        this.id = id;
-//        this.user = user;
-//        this.text = text;
-//    }
 
 
 

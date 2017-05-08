@@ -9,20 +9,19 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Main.class})
-//@ActiveProfiles({"test"})
+@ActiveProfiles({"test"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PictureDaoTests {
 
@@ -37,7 +36,7 @@ public class PictureDaoTests {
 
         LocalDateTime localDateTime = LocalDateTime.now();;
 
-        Picture picture = new Picture(2, "http://url.cz", "pokus 1", localDateTime.toString());
+        Picture picture = new Picture("http://url.cz", "pokus 1", localDateTime.toString());
         Author author = authorService.getAuthor(2);
         picture.setAuthor(author);
 

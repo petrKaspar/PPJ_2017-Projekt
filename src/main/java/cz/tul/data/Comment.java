@@ -14,10 +14,6 @@ public class Comment {
     @Column(name = "comment_id")
     private int commentId;
 
-//    private int pictureId;
-//    private int authorId;
-//    private int author_commentId;
-
     @Column(name = "text_comment")
     private String textComment;
     private String title;
@@ -31,14 +27,11 @@ public class Comment {
     @JoinColumn(name = "author_id")
     private Author author;
 
-//    @Column(name = "picture")
     @ManyToOne
     @JoinColumn(name = "picture_id")
     private Picture picture;
 
-    public Comment(int pictureId, int authorId, String textComment, String title, String created) {
-//        this.pictureId = pictureId;
-//        this.authorId = authorId;
+    public Comment(String textComment, String title, String created) {
         this.textComment = textComment;
         this.title = title;
         this.created = created;
@@ -62,14 +55,6 @@ public class Comment {
     public void setcommentId(int commentId) {
         this.commentId = commentId;
     }
-
-//    public int getAuthor_commentId() {
-//        return author_commentId;
-//    }
-//
-//    public void setAuthor_commentId(int author_commentId) {
-//        this.author_commentId = author_commentId;
-//    }
 
     public String getTextComment() {
         return textComment;
@@ -118,22 +103,6 @@ public class Comment {
     public void setNdislike(int ndislike) {
         this.ndislike = ndislike;
     }
-
-//    public int getAuthorId() {
-//        return authorId;
-//    }
-
-//    public void setAuthorId(int authorId) {
-//        this.authorId = authorId;
-//    }
-
-//    public int getPictureId() {
-//        return pictureId;
-//    }
-
-//    public void setPictureId(int pictureId) {
-//        this.pictureId = pictureId;
-//    }
 
     public Author getAuthor() {
         return author;

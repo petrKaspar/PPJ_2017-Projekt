@@ -8,8 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Created by Petr on 09.04.2017.
@@ -28,7 +26,7 @@ public class PictureService {
     }
 
     public List<Picture> getAllPictures() {
-        return StreamSupport.stream(pictureRepository.findAll().spliterator(), false).collect(Collectors.toList());
+        return (List<Picture>) pictureRepository.findAll();
     }
 
     public Picture getPicture(int id) {

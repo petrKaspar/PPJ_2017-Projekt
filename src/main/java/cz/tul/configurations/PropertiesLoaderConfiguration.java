@@ -17,22 +17,22 @@ public class PropertiesLoaderConfiguration {
 
 
     @Configuration
-    @PropertySource("classpath:application_test.properties")
-    @Profile("TEST")
+    @PropertySource("classpath:application-test.properties")
+    @Profile("test")
     public static class TestPropertiesLoaderConfiguration {
         @Bean
         public Properties properties() throws NamingException, IOException {
-            return PropertiesLoaderUtils.loadAllProperties("application_test.properties");
+            return PropertiesLoaderUtils.loadAllProperties("application-test.properties");
         }
     }
 
     @Configuration
-    @PropertySource("classpath:application_devel.properties")
-    @Profile("DEV")
+    @PropertySource("classpath:application-devel.properties")
+    @Profile("devel")
     public static class DevelPropertiesLoaderConfiguration {
         @Bean
         public Properties properties() throws NamingException, IOException {
-            return PropertiesLoaderUtils.loadAllProperties("application_devel.properties");
+            return PropertiesLoaderUtils.loadAllProperties("application-devel.properties");
         }
     }
 

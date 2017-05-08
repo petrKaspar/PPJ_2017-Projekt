@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Created by Petr on 10.04.2017.
@@ -27,9 +25,9 @@ public class CommentService {
     }
 
     public List<Comment> getAllComments() {
-        return StreamSupport.stream(commentRepository.findAll().spliterator(), false).collect(Collectors.toList());
+        return (List<Comment>) commentRepository.findAll();
     }
-    //
+
     public Comment getComment(int id) {
         return commentRepository.findOne(id);
     }
