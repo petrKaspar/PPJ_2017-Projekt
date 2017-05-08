@@ -26,7 +26,7 @@ public class AuthorDao {
 
         MapSqlParameterSource params = new MapSqlParameterSource();
 
-        params.addValue("name", author.getname());
+        params.addValue("name", author.getName());
         params.addValue("registration", author.getRegistration());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -52,7 +52,7 @@ public class AuthorDao {
                     public Author mapRow(ResultSet rs, int rowNum) throws SQLException {
                         Author author = new Author();
                         author.setAuthorId(rs.getInt("authorId"));
-                        author.setname(rs.getString("name"));
+                        author.setName(rs.getString("name"));
                         author.setRegistration(rs.getDate("registration"));
 
                         return author;

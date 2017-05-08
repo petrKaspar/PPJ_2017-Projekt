@@ -39,8 +39,8 @@ public class AuthorDaoTests {
         List<Author> authors = authorDao.getAllAuthors();
 
         assertEquals("Should be one author.", 1, authors.size());
-        assertEquals("Retrieved author name should equal inserted author name.", autor1.getname(),
-                authors.get(0).getname());
+        assertEquals("Retrieved author name should equal inserted author name.", autor1.getName(),
+                authors.get(0).getName());
 
     }
 

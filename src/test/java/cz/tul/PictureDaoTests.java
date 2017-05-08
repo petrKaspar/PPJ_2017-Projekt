@@ -116,7 +116,7 @@ public class PictureDaoTests {
         int nDislike = pictures.get(pictures.size()-1).getNdislike();
         Date lastUpdate = pictures.get(pictures.size()-1).getLastUpdate();
 
-        pictureDao.incrementNLike(pictureKey);
+        pictureDao.incrementNDislike(pictureKey);
 
         Picture p = pictureDao.getAllPictures().get(pictures.size()-1);
 

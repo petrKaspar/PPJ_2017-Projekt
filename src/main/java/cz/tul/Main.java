@@ -12,11 +12,6 @@ import org.springframework.context.annotation.Profile;
 public class Main {
 
     @Bean
-    public TestovaciDao testovaciDao() {
-        return new TestovaciDao();
-    }
-
-    @Bean
     public PictureDao pictureDao() {
         return new PictureDao();
     }

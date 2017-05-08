@@ -58,7 +58,7 @@ public class CommentDao {
                     public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {
                         Author author = new Author();
                         author.setAuthorId(rs.getInt("authorId"));
-                        author.setname(rs.getString("name"));
+                        author.setName(rs.getString("name"));
                         author.setRegistration(rs.getDate("registration"));
 
                         Comment comment = new Comment();
@@ -85,7 +85,7 @@ public class CommentDao {
                         (ResultSet rs, int rowNum) -> {
                             Author author = new Author();
                             author.setAuthorId(rs.getInt("authorId"));
-                            author.setname(rs.getString("name"));
+                            author.setName(rs.getString("name"));
                             author.setRegistration(rs.getDate("registration"));
 
                             Comment comment = new Comment();

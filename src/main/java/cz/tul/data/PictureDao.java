@@ -76,7 +76,7 @@ public class PictureDao {
                         (ResultSet rs, int rowNum) -> {
                             Author author = new Author();
                             author.setAuthorId(rs.getInt("authorId"));
-                            author.setname(rs.getString("name"));
+                            author.setName(rs.getString("name"));
                             author.setRegistration(rs.getDate("registration"));
 
                             Picture picture = new Picture();
@@ -107,7 +107,7 @@ public class PictureDao {
                     public Picture mapRow(ResultSet rs, int rowNum) throws SQLException {
                         Author author = new Author();
                         author.setAuthorId(rs.getInt("authorId"));
-                        author.setname(rs.getString("name"));
+                        author.setName(rs.getString("name"));
                         author.setRegistration(rs.getDate("registration"));
 
                         Picture picture = new Picture();
