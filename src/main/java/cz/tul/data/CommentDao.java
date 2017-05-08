@@ -1,6 +1,7 @@
 package cz.tul.data;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -17,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,7 +46,7 @@ public class CommentDao {
         int nLike = comment.getNlike();
 
         comment.setNlike(nLike + 1);
-        comment.setLastUpdate(odt.toEpochSecond()+"");
+        comment.setLastUpdate(new Date());
 
         int updatedKey = (int) session().save(comment);
 
@@ -57,7 +59,7 @@ public class CommentDao {
         int nDislike = comment.getNdislike();
 
         comment.setNdislike(nDislike + 1);
-        comment.setLastUpdate(odt.toEpochSecond()+"");
+        comment.setLastUpdate(new Date());
 
         int updatedKey = (int) session().save(comment);
 
@@ -77,5 +79,16 @@ public class CommentDao {
 
         return (Comment) crit.uniqueResult();
     }
+
+    public boolean deleteComment(int id) {
+        Query query = session().createQuery("delete from Comment where commentId=:id");
+        query.setInteger("id", id);
+        return query.executeUpdate() == 1;
+    }
+
+    public void deleteComments() {
+        session().createQuery("delete from Comment").executeUpdate();
+    }
+
 
 }

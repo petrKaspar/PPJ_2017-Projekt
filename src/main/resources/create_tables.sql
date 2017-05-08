@@ -17,8 +17,8 @@ commentId INT(6)  UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 commentText VARCHAR(255) NOT NULL,
 title VARCHAR(50) NOT NULL,
 authorCommentId INT(6) UNSIGNED,
-created VARCHAR(50) NOT NULL,
-lastUpdate VARCHAR(50),
+created Datetime NOT NULL,
+lastUpdate Datetime,
 nlike INT(6) DEFAULT 0,
 ndislike INT(6) DEFAULT 0
 ) ENGINE=INNODB;
@@ -32,7 +32,7 @@ commentId INT(6) UNSIGNED NOT NULL
 CREATE TABLE  author(
 authorId INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(20) NOT NULL,
-registration VARCHAR(50) NOT NULL
+registration Datetime NOT NULL
 ) ENGINE=INNODB;
 
 

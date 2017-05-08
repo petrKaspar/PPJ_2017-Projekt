@@ -18,11 +18,11 @@ public class Author {
     private int authorId;
 
     private String name;
-    private String registration;
+    private Date registration;
 
     public Author(){    }
 
-    public Author(String name, String registration) {
+    public Author(String name, Date registration) {
         this.name = name;
         this.registration = registration;
     }
@@ -35,11 +35,11 @@ public class Author {
         this.name = name;
     }
 
-    public String getRegistration() {
+    public Date getRegistration() {
         return registration;
     }
 
-    public void setRegistration(String registration) {
+    public void setRegistration(Date registration) {
         this.registration = registration;
     }
 
@@ -57,7 +57,7 @@ public class Author {
         return "Author{" +
                 "authorId=" + authorId +
                 ", name='" + name + '\'' +
-                ", registration='" + Instant.ofEpochSecond(new Long(registration)) + '\'' +
+                ", registration='" + (registration) + '\'' +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package cz.tul.data;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -18,6 +19,7 @@ import java.sql.Statement;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +48,7 @@ public class PictureDao {
         int nLike = picture.getNlike();
 
         picture.setNlike(nLike + 1);
-        picture.setLastUpdate(odt.toEpochSecond()+"");
+        picture.setLastUpdate(new Date());
 
         int updatedKey = (int) session().save(picture);
 
@@ -59,7 +61,7 @@ public class PictureDao {
         int nDislike = picture.getNdislike();
 
         picture.setNdislike(nDislike + 1);
-        picture.setLastUpdate(odt.toEpochSecond()+"");
+        picture.setLastUpdate(new Date());
 
         int updatedKey = (int) session().save(picture);
 
@@ -79,4 +81,16 @@ public class PictureDao {
 
         return (Picture) crit.uniqueResult();
     }
+
+    public boolean deletePicture(int id) {
+        Query query = session().createQuery("delete from Picture where pictureId=:id");
+        query.setInteger("id", id);
+        return query.executeUpdate() == 1;
+    }
+
+    public void deletePictures() {
+        session().createQuery("delete from Picture").executeUpdate();
+    }
+
+
 }

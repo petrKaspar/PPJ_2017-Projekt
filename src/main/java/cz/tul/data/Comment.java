@@ -1,6 +1,9 @@
 package cz.tul.data;
 
+import org.hibernate.annotations.OnDelete;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Petr on 03.04.2017.
@@ -16,8 +19,8 @@ public class Comment {
 
     private String commentText;
     private String title;
-    private String created;
-    private String lastUpdate;
+    private Date created;
+    private Date lastUpdate;
 
     private int nlike;
     private int ndislike;
@@ -28,16 +31,17 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "pictureId")
+    @OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
     private Picture picture;
 
-    public Comment(String commentText, String title, String created) {
+    public Comment(String commentText, String title, Date created) {
 
         this.commentText = commentText;
         this.title = title;
         this.created = created;
     }
 
-    public Comment(Picture picture, Author author, String commentText, String title, String created) {
+    public Comment(Picture picture, Author author, String commentText, String title, Date created) {
         this.picture = picture;
         this.author = author;
         this.commentText = commentText;
@@ -48,11 +52,11 @@ public class Comment {
     public Comment() {
     }
 
-    public int getcommentId() {
+    public int getCommentId() {
         return commentId;
     }
 
-    public void setcommentId(int commentId) {
+    public void setCommentId(int commentId) {
         this.commentId = commentId;
     }
 
@@ -72,19 +76,19 @@ public class Comment {
         this.title = title;
     }
 
-    public String getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
-    public String getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(String lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

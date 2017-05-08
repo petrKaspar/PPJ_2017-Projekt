@@ -1,6 +1,7 @@
 package cz.tul.data;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -43,10 +44,17 @@ public class AuthorDao {
 
     public Author getAuthor(int id) {
         Criteria crit = session().createCriteria(Author.class);
-
         crit.add(Restrictions.idEq(id));
-
         return (Author) crit.uniqueResult();
     }
 
+    public boolean deleteAuthor(int id) {
+        Query query = session().createQuery("delete from Author where authorId=:id");
+        query.setInteger("id", id);
+        return query.executeUpdate() == 1;
+    }
+
+    public void deleteAuthors() {
+        session().createQuery("delete from Author").executeUpdate();
+    }
 }

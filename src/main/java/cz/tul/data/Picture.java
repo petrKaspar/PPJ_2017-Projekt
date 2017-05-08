@@ -1,6 +1,9 @@
 package cz.tul.data;
 
+import org.hibernate.annotations.OnDelete;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Petr on 03.04.2017.
@@ -16,10 +19,10 @@ public class Picture {
 
     private String url;
     private String title;
-    private String created;
+    private Date created;
 
     @Column(name="lastUpdate")
-    private String lastUpdate;
+    private Date lastUpdate;
 
     private String tags;
 
@@ -29,6 +32,7 @@ public class Picture {
 
     @OneToOne
     @JoinColumn(name = "authorId")
+    @OnDelete(action = org.hibernate.annotations.OnDeleteAction.CASCADE)
     private Author author;
 
     public Author getAuthor() {
@@ -39,7 +43,7 @@ public class Picture {
         this.author = author;
     }
 
-    public Picture(Author author, String url, String title, String created){
+    public Picture(Author author, String url, String title, Date created){
         this.author = author;
         this.url = url;
         this.title = title;
@@ -49,7 +53,7 @@ public class Picture {
     public Picture() {
     }
 
-    public Picture(String url, String title, String created) {
+    public Picture(String url, String title, Date created) {
         this.url = url;
         this.title = title;
         this.created = created;
@@ -67,11 +71,11 @@ public class Picture {
         this.title = title;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
-    public void setLastUpdate(String lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -95,11 +99,11 @@ public class Picture {
         return title;
     }
 
-    public String getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public String getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
