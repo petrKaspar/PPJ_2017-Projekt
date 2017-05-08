@@ -59,7 +59,7 @@ public class Picture {
         this.url = url;
     }
 
-    public void settitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -91,7 +91,7 @@ public class Picture {
         return url;
     }
 
-    public String gettitle() {
+    public String getTitle() {
         return title;
     }
 
@@ -134,25 +134,5 @@ public class Picture {
                 ", author=" + author +
                 '}';
     }
-
-    //    private User user;
-//
-//    public Picture() {
-//
-//    }
-//
-//    public Picture(User user, String text) {
-//        this.user = user;
-//        this.text = text;
-//    }
-//
-//    public Picture(int id, User user, String text) {
-//        this.id = id;
-//        this.user = user;
-//        this.text = text;
-//    }
-
-
-
 
 }

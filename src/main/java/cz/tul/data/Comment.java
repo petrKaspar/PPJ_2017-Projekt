@@ -42,11 +42,11 @@ public class Comment {
     public Comment() {
     }
 
-    public int getcommentId() {
+    public int getCommentId() {
         return commentId;
     }
 
-    public void setcommentId(int commentId) {
+    public void setCommentId(int commentId) {
         this.commentId = commentId;
     }
 
@@ -66,11 +66,11 @@ public class Comment {
         this.commentText = commentText;
     }
 
-    public String gettitle() {
+    public String getTitle() {
         return title;
     }
 
-    public void settitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 

@@ -34,39 +34,117 @@ public class CommentDaoTests {
     @Autowired
     private CommentDao commentDao;
 
+
+
     @Test
-    public void Test1_createComment() throws SQLException {
+    public void testCreateComment() throws SQLException {
 
-        OffsetDateTime odt = OffsetDateTime.now();
-        //int pictureId, int authorId, String commentText, String title, String created
-        Comment comment = new Comment(1, 2, "text komentare", "Titulek komentare", new Date());
-        Author author = authorDao.getAuthor(2);
+        commentDao.deleteComments();
+
+        Author author = new Author("Franta", new Date());
+        Picture picture = new Picture(2, "http://url.cz", "pokus 1", new Date());
+
+        int authorKey = authorDao.create(author);
+        int pictureKey = pictureDao.create(picture);
+
+        Comment comment = new Comment(pictureKey, authorKey, "text komentare", "Titulek komentare", new Date());
         comment.setAuthor(author);
+        comment.setPicture(picture);
 
-        assertTrue("Offer creation should return true", commentDao.createBool(comment));
-        
-        List<Comment> comments = commentDao.getComments_innerjoin();
-        assertEquals("Should be one offer in database.", comments.size(), commentDao.create(comment) - 1);
+        assertTrue("Comment creation should return true", commentDao.createBool(comment));
 
+        List<Comment> comments = commentDao.getAllComments();
+        assertEquals("Should be one comment in database.", 1, comments.size());
+    }
+
+    @Test
+    public void testDeleteComment() throws SQLException {
+
+        commentDao.deleteComments();
+        Author author = new Author("Franta", new Date());
+        Picture picture = new Picture(2, "http://url.cz", "pokus 1", new Date());
+
+        int authorKey = authorDao.create(author);
+        int pictureKey = pictureDao.create(picture);
+
+        Comment comment = new Comment(pictureKey, authorKey, "text komentare", "Titulek komentare", new Date());
+        Comment comment1 = new Comment(pictureKey, authorKey, "text komentare", "Titulek komentare", new Date());
+        Comment comment2 = new Comment(pictureKey, authorKey, "text komentare", "Titulek komentare", new Date());
+        Comment comment3 = new Comment(pictureKey, authorKey, "text komentare", "Titulek komentare", new Date());
+
+        commentDao.createBool(comment);
+        commentDao.createBool(comment1);
+        commentDao.createBool(comment2);
+        commentDao.createBool(comment3);
+
+        List<Comment> comments = commentDao.getAllComments();
+        assertEquals("Should be four comments.", 4, comments.size());
+
+        commentDao.deleteComment(comments.get(0).getCommentId());
+        commentDao.deleteComment(comments.get(1).getCommentId());
+
+        comments = commentDao.getAllComments();
+        assertEquals("Should be two commets.", 2, comments.size());
 
     }
 
     @Test
-    public void Test_addLikeDislike() {
+    public void testAddLike() throws SQLException {
 
-        List<Comment> comments = commentDao.getComments_innerjoin();
 
-        int lastComment = comments.get(comments.size()-1).getPictureId();
+        Author author = new Author("Franta", new Date());
+        Picture picture = new Picture(2, "http://url.cz", "pokus 1", new Date());
+
+        int authorKey = authorDao.create(author);
+        int pictureKey = pictureDao.create(picture);
+
+        Comment comment = new Comment(pictureKey, authorKey, "text komentare", "Titulek komentare", new Date());
+        comment.setAuthor(author);
+        comment.setPicture(picture);
+
+        int key = commentDao.create(comment);
+
+        List<Comment> comments = commentDao.getAllComments();
+
         int nLike = comments.get(comments.size()-1).getNlike();
         int nDislike = comments.get(comments.size()-1).getNdislike();
         Date lastUpdate = comments.get(comments.size()-1).getLastUpdate();
 
-        commentDao.incrementNLike(lastComment);
-        commentDao.incrementNDislike(lastComment);
+        commentDao.incrementNLike(key);
 
-        Comment c = commentDao.getComment(lastComment);
+        Comment c = commentDao.getAllComments().get(comments.size()-1);
 
         assertEquals("obr.getNlike() Should be nLike + 1.", nLike + 1, c.getNlike());
+        assertNotEquals("obr.getNlike() Should be nLike + 1.", lastUpdate, c.getLastUpdate());
+
+    }
+
+    @Test
+    public void testAddDislike() throws SQLException {
+
+
+        Author author = new Author("Franta", new Date());
+        Picture picture = new Picture(2, "http://url.cz", "pokus 1", new Date());
+
+        int authorKey = authorDao.create(author);
+        int pictureKey = pictureDao.create(picture);
+
+        Comment comment = new Comment(pictureKey, authorKey, "text komentare", "Titulek komentare", new Date());
+        comment.setAuthor(author);
+        comment.setPicture(picture);
+
+        int key = commentDao.create(comment);
+
+        List<Comment> comments = commentDao.getAllComments();
+
+        int nLike = comments.get(comments.size()-1).getNlike();
+        int nDislike = comments.get(comments.size()-1).getNdislike();
+        Date lastUpdate = comments.get(comments.size()-1).getLastUpdate();
+
+        commentDao.incrementNDislike(key);
+
+        Comment c = commentDao.getAllComments().get(comments.size()-1);
+
         assertEquals("obr.getNdislike() Should be nDislike + 1.", nDislike + 1, c.getNdislike());
         assertNotEquals("obr.getNlike() Should be nLike + 1.", lastUpdate, c.getLastUpdate());
 

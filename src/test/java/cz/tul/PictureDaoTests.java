@@ -33,74 +33,96 @@ public class PictureDaoTests {
     private AuthorDao authorDao;
 
     @Test
-    public void Test1_createPicture() throws SQLException {
+    public void testCreatePicture() throws SQLException {
 
-//        pictureDao.create(picture);
+        pictureDao.deletePictures();
 
-//        assertTrue("User creation should return true", usersDao.create(user));
+        Author author = new Author("Franta", new Date());
+        int authorKey = authorDao.create(author);
 
-//        Offer offer = new Offer(user, "This is a test offer.");
+        Picture picture = new Picture(authorKey, "http://url.cz", "test JDBC", new Date());
+        int pictureKey = pictureDao.create(picture);
 
-        OffsetDateTime odt = OffsetDateTime.now();
-//        Picture picture = new Picture(2, "http://url.cz", "pokus 1", odt.toEpochSecond()+"");
-        Picture picture = new Picture(2, "http://url.cz", "pokus 1", new Date());
-        Author author = authorDao.getAuthor(2);
-        picture.setAuthor(author);
+        List<Picture> pictures = pictureDao.getAllPictures();
+        assertEquals("Should be one comment in database.", 1, pictures.size());
+    }
 
-        List<Picture> pictures = pictureDao.getPictures_innerjoin();
-        assertEquals("Should be one offer in database.", pictures.size(), pictureDao.create(picture) - 1);
+    @Test
+    public void testDeletePicture() throws SQLException {
 
-//        assertTrue("Offer creation should return true", pictureDao.create(picture));
+        pictureDao.deletePictures();
+        Author author = new Author("Franta", new Date());
+        int authorKey = authorDao.create(author);
+
+        Picture picture = new Picture(authorKey, "http://url.cz", "pokus 1", new Date());
+        Picture picture1 = new Picture(authorKey, "http://url.cz", "pokus 1", new Date());
+        Picture picture2 = new Picture(authorKey, "http://url.cz", "pokus 1", new Date());
+        Picture picture3 = new Picture(authorKey, "http://url.cz", "pokus 1", new Date());
+        pictureDao.create(picture);
+        pictureDao.create(picture1);
+        pictureDao.create(picture2);
+        pictureDao.create(picture3);
+
+        List<Picture> pictures = pictureDao.getAllPictures();
+        assertEquals("Should be four comments.", 4, pictures.size());
+
+        pictureDao.deletePicture(pictures.get(0).getPictureId());
+        pictureDao.deletePicture(pictures.get(1).getPictureId());
+
+        pictures = pictureDao.getAllPictures();
+        assertEquals("Should be two commets.", 2, pictures.size());
 
     }
 
     @Test
-    public void Test_addLikeDislike() {
+    public void testAddLike() throws SQLException {
+        pictureDao.deletePictures();
 
-        List<Picture> pictures = pictureDao.getPictures_innerjoin();
+        Author author = new Author("Franta", new Date());
+        int authorKey = authorDao.create(author);
 
-        int lastImage = pictures.get(pictures.size()-1).getPictureId();
+        Picture picture = new Picture(authorKey, "http://url.cz", "pokus 1", new Date());
+        int pictureKey = pictureDao.create(picture);
+
+        List<Picture> pictures = pictureDao.getAllPictures();
+
+
         int nLike = pictures.get(pictures.size()-1).getNlike();
         int nDislike = pictures.get(pictures.size()-1).getNdislike();
         Date lastUpdate = pictures.get(pictures.size()-1).getLastUpdate();
 
-        pictureDao.incrementNLike(lastImage);
-        pictureDao.incrementNDislike(lastImage);
+        pictureDao.incrementNLike(pictureKey);
 
-        Picture obr = pictureDao.getPicture(lastImage);
+        Picture p = pictureDao.getAllPictures().get(pictures.size()-1);
 
-        assertEquals("obr.getNlike() Should be nLike + 1.", nLike + 1, obr.getNlike());
-        assertEquals("obr.getNdislike() Should be nDislike + 1.", nDislike + 1, obr.getNdislike());
-        assertNotEquals("obr.getNlike() Should be nLike + 1.", lastUpdate, obr.getLastUpdate());
+        assertEquals("obr.getNlike() Should be nLike + 1.", nLike + 1, p.getNlike());
+        assertNotEquals("obr.getNlike() Should be nLike + 1.", lastUpdate, p.getLastUpdate());
 
     }
 
     @Test
-    public void Test2_listOffers() {
+    public void testAddDislike() throws SQLException {
+        pictureDao.deletePictures();
 
-        List<Picture> pictures = pictureDao.getPictures_innerjoin();
-        // Get the offer with ID filled in.
-//        Picture picture = pictures.get(0);
-        System.out.println("pictures.size() = " + pictures.size());
+        Author author = new Author("Franta", new Date());
+        int authorKey = authorDao.create(author);
 
-        OffsetDateTime odt = OffsetDateTime.now();;
-//        Picture picture = new Picture(2, "http://url.cz", "pokus 1", odt.toEpochSecond()+"");
-        Picture picture = new Picture(2, "http://url.cz", "pokus 1", new Date());
-        Author author = authorDao.getAuthor(2);
-        picture.setAuthor(author);
+        Picture picture = new Picture(authorKey, "http://url.cz", "pokus 1", new Date());
+        int pictureKey = pictureDao.create(picture);
 
-        System.out.println(picture.getAuthor().getAuthorId());
-        System.out.println(pictures.get(pictures.size()-1).getAuthorId());
-        System.out.println(pictures.get(pictures.size()-1).getAuthor().getAuthorId());
-        System.out.println(picture.getAuthor().getname());
-        System.out.println(pictures.get(pictures.size()-1).getAuthor().getname());
-        System.out.println(picture.getAuthor().getRegistration());
-        System.out.println(pictures.get(pictures.size()-1).getAuthor().getRegistration());
+        List<Picture> pictures = pictureDao.getAllPictures();
 
-        assertEquals("Should be one offer in database.", pictures.size(), pictures.size());
 
-//        assertEquals("Retrieved offer should match created offer.", picture,
-//                pictures.get(pictures.size()-1));
+        int nDislike = pictures.get(pictures.size()-1).getNdislike();
+        Date lastUpdate = pictures.get(pictures.size()-1).getLastUpdate();
+
+        pictureDao.incrementNLike(pictureKey);
+
+        Picture p = pictureDao.getAllPictures().get(pictures.size()-1);
+
+        assertEquals("obr.getNlike() Should be nLike + 1.", nDislike + 1, p.getNdislike());
+        assertNotEquals("obr.getNlike() Should be nLike + 1.", lastUpdate, p.getLastUpdate());
+
     }
 
 

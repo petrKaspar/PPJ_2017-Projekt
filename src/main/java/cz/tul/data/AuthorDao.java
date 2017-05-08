@@ -33,13 +33,9 @@ public class AuthorDao {
         boolean b = jdbc.update("insert into author (name, registration) values (:name, :registration)",
                 params, keyHolder) == 1;
 
-        System.out.println("b = " + b);
-        System.out.println("keyHolder.getKey() = " + keyHolder.getKey());
-
         if (b == false) return 0;
         return keyHolder.getKey().intValue();
 
-//        return jdbc.update("insert into author (name, registration) values (:name, :registration)", params) == 1;
     }
 
     public List<Author> getAllAuthors() {
@@ -69,5 +65,7 @@ public class AuthorDao {
     public void deleteAuthor(int id) {
         jdbc.getJdbcOperations().execute("DELETE FROM author where authorId="+id);
     }
-
+    public void deleteAuthors() {
+        jdbc.getJdbcOperations().execute("DELETE FROM author");
+    }
 }

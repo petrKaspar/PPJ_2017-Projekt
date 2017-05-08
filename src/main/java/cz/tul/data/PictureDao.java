@@ -1,6 +1,7 @@
 package cz.tul.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -37,16 +38,9 @@ public class PictureDao {
                         "values (:authorId, :url, :title, :created)",
                 params, keyHolder) == 1;
 
-        System.out.println("b = " + b);
-        System.out.println("keyHolder.getKey() = " + keyHolder.getKey());
-        
+
         if (b == false) return 0;
         return keyHolder.getKey().intValue();
-
-//        System.out.printf("insert into picture (authorId, url, title, created) values (:authorId, :url, :title, :created)",params);
-//        return jdbc
-//                .update("insert into picture (authorId, url, title, created) values (:authorId, :url, :title, :created)",
-//                        params) == 1;
     }
 
     public boolean incrementNLike(int id) {
@@ -54,7 +48,6 @@ public class PictureDao {
         params.addValue("id", id);
         params.addValue("lastUpdate", new Date());
 
-        System.out.printf("update picture set nlike = nlike + 1 where pictureId=:id", params);
         return jdbc.update("update picture set nlike = nlike + 1, " +
                 "lastUpdate = :lastUpdate where pictureId=:id", params) == 1;
     }
@@ -64,7 +57,6 @@ public class PictureDao {
         params.addValue("id", id);
         params.addValue("lastUpdate", new Date());
 
-        System.out.printf("update picture set ndislike = ndislike + 1lastUpdate = :lastUpdate where pictureId=:id", params);
         return jdbc.update("update picture set ndislike = ndislike + 1, " +
                 "lastUpdate = :lastUpdate where pictureId=:id", params) == 1;
     }
@@ -74,7 +66,6 @@ public class PictureDao {
         params.addValue("id", id);
         params.addValue("lastUpdate", new Date());
 
-        System.out.printf("update picture set nlike = nlike + 1 where pictureId=:id", params);
         return jdbc.update("update picture set lastUpdate = :lastUpdate where pictureId=:id", params) == 1;
     }
 
@@ -92,9 +83,8 @@ public class PictureDao {
                             picture.setPictureId(rs.getInt("pictureId"));
                             picture.setAuthorId(rs.getInt("authorId"));
                             picture.setUrl(rs.getString("url"));
-                            picture.settitle(rs.getString("title"));
+                            picture.setTitle(rs.getString("title"));
                             picture.setCreated(rs.getDate("created"));
-//                            picture.setLastUpdate(LocalDateTime.parse(rs.getString("lastUpdate")));
                             picture.setLastUpdate(rs.getDate("lastUpdate"));
                             picture.setNlike(rs.getInt("nlike"));
                             picture.setNdislike(rs.getInt("ndislike"));
@@ -124,7 +114,7 @@ public class PictureDao {
                         picture.setPictureId(rs.getInt("pictureId"));
                         picture.setAuthorId(rs.getInt("authorId"));
                         picture.setUrl(rs.getString("url"));
-                        picture.settitle(rs.getString("title"));
+                        picture.setTitle(rs.getString("title"));
                         picture.setCreated(rs.getDate("created"));
                         picture.setLastUpdate(rs.getDate("lastUpdate"));
                         picture.setNlike(rs.getInt("nlike"));
@@ -135,6 +125,17 @@ public class PictureDao {
                     }
 
                 });
+    }
+
+    public List<Picture> getAllPictures() {
+        return jdbc.query("select * from picture", BeanPropertyRowMapper.newInstance(Picture.class));
+    }
+
+    public void deletePicture(int id) {
+        jdbc.getJdbcOperations().execute("DELETE FROM picture where pictureId="+id);
+    }
+    public void deletePictures() {
+        jdbc.getJdbcOperations().execute("DELETE FROM picture");
     }
 
 }
