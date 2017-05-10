@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Petr on 10.04.2017.
  */
 @Service
-@Transactional
+//@Transactional
 public class CommentService {
 
     @Autowired
@@ -21,7 +22,7 @@ public class CommentService {
 
     public int create(Comment comment){
         Comment newComment = commentRepository.save(comment);
-        return newComment.getcommentId();
+        return newComment.getCommentId();
     }
 
     public List<Comment> getAllComments() {
@@ -34,13 +35,13 @@ public class CommentService {
 
     public boolean incrementNLike(int id) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        commentRepository.incrementNLike(id, localDateTime.toString());
+        commentRepository.incrementNLike(id, LocalDateTime.now());
         return true;
     }
 
     public boolean incrementNDislike(int id) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        commentRepository.incrementNDisLike(id, localDateTime.toString());
+        commentRepository.incrementNDisLike(id, LocalDateTime.now());
         return true;
     }
 

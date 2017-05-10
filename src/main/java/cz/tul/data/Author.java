@@ -3,6 +3,7 @@ package cz.tul.data;
 import javax.persistence.*;
 import java.security.Timestamp;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -14,15 +15,15 @@ public class Author {
 
     @Id
     @GeneratedValue
-    @Column(name = "author_id")
+    @Column(name = "authorId")
     private int authorId;
 
     private String name;
-    private String registration;
+    private LocalDateTime registration;
 
     public Author(){    }
 
-    public Author(String name, String registration) {
+    public Author(String name, LocalDateTime registration) {
         this.name = name;
         this.registration = registration;
     }
@@ -35,11 +36,11 @@ public class Author {
         this.name = name;
     }
 
-    public String getRegistration() {
+    public LocalDateTime getRegistration() {
         return registration;
     }
 
-    public void setRegistration(String registration) {
+    public void setRegistration(LocalDateTime registration) {
         this.registration = registration;
     }
 
@@ -57,7 +58,7 @@ public class Author {
         return "Author{" +
                 "authorId=" + authorId +
                 ", name='" + name + '\'' +
-                ", registration='" + Instant.ofEpochSecond(new Long(registration)) + '\'' +
+                ", registration='" + (registration) + '\'' +
                 '}';
     }
 }

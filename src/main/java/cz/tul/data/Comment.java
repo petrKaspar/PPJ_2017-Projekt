@@ -1,6 +1,11 @@
 package cz.tul.data;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by Petr on 03.04.2017.
@@ -11,36 +16,39 @@ public class Comment {
 
     @Id
     @GeneratedValue
-    @Column(name = "comment_id")
+    @Column(name = "commentId")
     private int commentId;
 
-    @Column(name = "text_comment")
-    private String textComment;
+    @Column(name = "commentText")
+    private String commentText;
+
     private String title;
-    private String created;
-    private String lastUpdate;
+    private LocalDateTime created;
+    private LocalDateTime lastUpdate;
 
     private int nlike;
     private int ndislike;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "authorId")
     private Author author;
 
     @ManyToOne
-    @JoinColumn(name = "picture_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "pictureId")
     private Picture picture;
 
-    public Comment(String textComment, String title, String created) {
-        this.textComment = textComment;
+    public Comment(String commentText, String title, LocalDateTime created) {
+        this.commentText = commentText;
         this.title = title;
         this.created = created;
     }
 
-    public Comment(Picture picture, Author author, String textComment, String title, String created) {
+    public Comment(Picture picture, Author author, String commentText, String title, LocalDateTime created) {
         this.picture = picture;
         this.author = author;
-        this.textComment = textComment;
+        this.commentText = commentText;
         this.title = title;
         this.created = created;
     }
@@ -48,20 +56,20 @@ public class Comment {
     public Comment() {
     }
 
-    public int getcommentId() {
+    public int getCommentId() {
         return commentId;
     }
 
-    public void setcommentId(int commentId) {
+    public void setCommentId(int commentId) {
         this.commentId = commentId;
     }
 
-    public String getTextComment() {
-        return textComment;
+    public String getCommentText() {
+        return commentText;
     }
 
-    public void setTextComment(String textComment) {
-        this.textComment = textComment;
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
     }
 
     public String gettitle() {
@@ -72,19 +80,19 @@ public class Comment {
         this.title = title;
     }
 
-    public String getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public String getLastUpdate() {
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(String lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

@@ -14,7 +14,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -39,7 +41,7 @@ public class CommentDaoTests {
     public void Test1_createComment() throws SQLException {
 
         OffsetDateTime odt = OffsetDateTime.now();
-        Comment comment = new Comment("Hibernate text komentare", "Titulek Hibernate",odt.toEpochSecond()+"");
+        Comment comment = new Comment("Hibernate text komentare", "Titulek Hibernate", LocalDateTime.now());
         Author author = authorService.getAuthor(2);
         Picture p3 = pictureService.getPicture(5);
 
@@ -56,9 +58,9 @@ public class CommentDaoTests {
 
         List<Comment> comments = commentService.getAllComments();
 
-        int lastComment = comments.get(comments.size()-1).getcommentId();
+        int lastComment = comments.get(comments.size()-1).getCommentId();
         int nLike = comments.get(comments.size()-1).getNlike();
-        String lastUpdate = comments.get(comments.size()-1).getLastUpdate();
+        LocalDateTime lastUpdate = comments.get(comments.size()-1).getLastUpdate();
 
         commentService.incrementNLike(lastComment);
 
@@ -74,9 +76,9 @@ public class CommentDaoTests {
 
         List<Comment> comments = commentService.getAllComments();
 
-        int lastComment = comments.get(comments.size()-1).getcommentId();
+        int lastComment = comments.get(comments.size()-1).getCommentId();
         int nDislike = comments.get(comments.size()-1).getNdislike();
-        String lastUpdate = comments.get(comments.size()-1).getLastUpdate();
+        LocalDateTime lastUpdate = comments.get(comments.size()-1).getLastUpdate();
 
         commentService.incrementNDislike(lastComment);
 

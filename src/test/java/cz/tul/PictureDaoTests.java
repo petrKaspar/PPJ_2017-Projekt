@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -36,7 +37,7 @@ public class PictureDaoTests {
 
         LocalDateTime localDateTime = LocalDateTime.now();;
 
-        Picture picture = new Picture("http://url.cz", "pokus 1", localDateTime.toString());
+        Picture picture = new Picture("http://url.cz", "pokus 1", LocalDateTime.now());
         Author author = authorService.getAuthor(2);
         picture.setAuthor(author);
 
@@ -52,7 +53,7 @@ public class PictureDaoTests {
 
         int lastImage = pictures.get(pictures.size()-1).getPictureId();
         int nLike = pictures.get(pictures.size()-1).getNlike();
-        String lastUpdate = pictures.get(pictures.size()-1).getLastUpdate();
+        LocalDateTime lastUpdate = pictures.get(pictures.size()-1).getLastUpdate();
 
         pictureService.incrementNLike(lastImage);
 
@@ -70,7 +71,7 @@ public class PictureDaoTests {
 
         int lastImage = pictures.get(pictures.size()-1).getPictureId();
         int nDislike = pictures.get(pictures.size()-1).getNdislike();
-        String lastUpdate = pictures.get(pictures.size()-1).getLastUpdate();
+        LocalDateTime lastUpdate = pictures.get(pictures.size()-1).getLastUpdate();
 
         pictureService.incrementNDislike(lastImage);
 

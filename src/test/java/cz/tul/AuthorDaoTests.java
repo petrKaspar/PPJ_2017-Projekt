@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -32,7 +33,7 @@ public class AuthorDaoTests {
     @Test
     public void testUsers() {
         LocalDateTime localDateTime = LocalDateTime.now();
-        Author a = new Author("Jarda JPA", localDateTime.getDayOfMonth()+"");
+        Author a = new Author("Jarda JPA", LocalDateTime.now());
 
         List<Author> authors = authorService.getAllAuthors();
         int nAuthors = authors.size();

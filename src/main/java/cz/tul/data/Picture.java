@@ -1,6 +1,11 @@
 package cz.tul.data;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
+//import java.util.LocalDateTime;
 
 /**
  * Created by Petr on 03.04.2017.
@@ -11,17 +16,17 @@ public class Picture {
 
     @Id
     @GeneratedValue
-    @Column(name = "picture_id")
+    @Column(name = "pictureId")
     private int pictureId;
 
 //    private int authorId;
 
     private String url;
     private String title;
-    private String created;
+    private LocalDateTime created;
 
     @Column(name="lastUpdate")
-    private String lastUpdate;
+    private LocalDateTime lastUpdate;
 
     private String tags;
 
@@ -29,8 +34,9 @@ public class Picture {
     private int ndislike;
 
 
-    @OneToOne
-    @JoinColumn(name = "author_id")
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "authorId")
     private Author author;
 
     public Author getAuthor() {
@@ -41,7 +47,7 @@ public class Picture {
         this.author = author;
     }
 
-    public Picture(Author author, String url, String title, String created){
+    public Picture(Author author, String url, String title, LocalDateTime created){
         this.author = author;
         this.url = url;
         this.title = title;
@@ -51,7 +57,7 @@ public class Picture {
     public Picture() {
     }
 
-    public Picture(String url, String title, String created) {
+    public Picture(String url, String title, LocalDateTime created) {
         this.url = url;
         this.title = title;
         this.created = created;
@@ -69,11 +75,11 @@ public class Picture {
         this.title = title;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public void setLastUpdate(String lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -97,11 +103,11 @@ public class Picture {
         return title;
     }
 
-    public String getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public String getLastUpdate() {
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 

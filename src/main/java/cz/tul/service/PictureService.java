@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Petr on 09.04.2017.
  */
 @Service
-@Transactional
+//@Transactional
 public class PictureService {
 
 
@@ -35,13 +36,13 @@ public class PictureService {
 
     public boolean incrementNLike(int id) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        pictureRepository.incrementNLike(id, localDateTime.toString());
+        pictureRepository.incrementNLike(id, LocalDateTime.now());
         return true;
     }
 
     public boolean incrementNDislike(int id) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        pictureRepository.incrementNDisLike(id, localDateTime.toString());
+        pictureRepository.incrementNDisLike(id, LocalDateTime.now());
         return true;
     }
 

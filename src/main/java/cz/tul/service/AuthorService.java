@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Petr on 09.04.2017.
  */
 @Service
-@Transactional
+//@Transactional
 public class AuthorService {
 
     @Autowired

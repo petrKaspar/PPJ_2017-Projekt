@@ -8,6 +8,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
  * Created by Petr on 27.04.2017.
  */
@@ -18,12 +21,12 @@ public interface CommentRepository extends CrudRepository<Comment, Integer> {
     @Transactional
     @Query("update Comment set nlike = nlike + 1, lastUpdate=:lastUpdate where commentId=:commentId")
     int incrementNLike(@Param("commentId") int commentId,
-                       @Param("lastUpdate") String lastUpdate);
+                       @Param("lastUpdate") LocalDateTime lastUpdate);
 
     @Modifying
     @Transactional
     @Query("update Comment set ndislike = ndislike + 1, lastUpdate=:lastUpdate where commentId=:commentId")
     int incrementNDisLike(@Param("commentId") int commentId,
-                          @Param("lastUpdate") String lastUpdate);
+                          @Param("lastUpdate") LocalDateTime lastUpdate);
 
 }
