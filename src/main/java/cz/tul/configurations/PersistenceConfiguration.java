@@ -1,6 +1,6 @@
 package cz.tul.configurations;
 
-import cz.tul.repositories.TestovaciRepository;
+import cz.tul.repositories.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +13,8 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
@@ -22,21 +24,22 @@ import java.util.Properties;
 
 
 @Configuration
-@EnableJpaRepositories(basePackageClasses = {TestovaciRepository.class})
-//@EnableTransactionManagement
+//@Component
+@EnableJpaRepositories(basePackageClasses = {AuthorRepository.class})
+@EnableTransactionManagement
 public class PersistenceConfiguration {
 
     //Pro správnou funkci této anotace je nutné definovat Bean PropertySourcesPlaceholderConfigurer - viz třída MainSpringConfiguration
-    @Value("${reldb.connection.driver}")
+    @Value("${spring.datasource.driver}")
     private String connectionDriver;
 
-    @Value("${reldb.connection.url}")
+    @Value("${spring.datasource.url}")
     private String connectionURL;
 
-    @Value("${reldb.connection.username}")
+    @Value("${spring.datasource.username}")
     private String connectionUsername;
 
-    @Value("${reldb.connection.password}")
+    @Value("${spring.datasource.password}")
     private String connectionPassword;
 
     @Autowired
