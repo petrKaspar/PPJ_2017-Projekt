@@ -19,6 +19,7 @@ public class Author {
     private int authorId;
 
     private String name;
+
     private LocalDateTime registration;
 
     public Author(){    }
@@ -28,11 +29,11 @@ public class Author {
         this.registration = registration;
     }
 
-    public String getname() {
+    public String getName() {
         return name;
     }
 
-    public void setname(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 

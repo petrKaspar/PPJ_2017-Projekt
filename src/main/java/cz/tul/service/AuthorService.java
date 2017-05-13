@@ -12,7 +12,6 @@ import java.util.List;
  * Created by Petr on 09.04.2017.
  */
 @Service
-//@Transactional
 public class AuthorService {
 
     @Autowired
@@ -28,6 +27,18 @@ public class AuthorService {
     }
     public Author getAuthor(int id) {
         return authorRepository.findOne(id);
+    }
+
+    public boolean exists(int id){
+        return authorRepository.exists(id);
+    }
+
+    public void deleteAuthors(){
+        authorRepository.deleteAll();
+    }
+
+    public void deleteAuthor(Author author) {
+        authorRepository.delete(author);
     }
 
 }

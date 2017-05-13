@@ -24,6 +24,7 @@ public class Comment {
 
     private String title;
     private LocalDateTime created;
+
     private LocalDateTime lastUpdate;
 
     private int nlike;
@@ -72,11 +73,11 @@ public class Comment {
         this.commentText = commentText;
     }
 
-    public String gettitle() {
+    public String getTitle() {
         return title;
     }
 
-    public void settitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 

@@ -15,12 +15,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Main.class})
@@ -37,55 +34,139 @@ public class CommentDaoTests {
     @Autowired
     private CommentService commentService;
 
+
+
+
     @Test
-    public void Test1_createComment() throws SQLException {
+    public void testCreateComment() throws SQLException {
 
-        OffsetDateTime odt = OffsetDateTime.now();
-        Comment comment = new Comment("Hibernate text komentare", "Titulek Hibernate", LocalDateTime.now());
-        Author author = authorService.getAuthor(2);
-        Picture p3 = pictureService.getPicture(5);
+        commentService.deleteComments();
 
+        Author author = new Author("Franta JPA testC", LocalDateTime.now());
+        Picture picture = new Picture(author, "http://url.cz", "pokus 1", LocalDateTime.now());
+
+        int authorKey = authorService.create(author);
+        int pictureKey = pictureService.create(picture);
+        picture.setPictureId(pictureKey);
+        author.setAuthorId(authorKey);
+
+        Comment comment = new Comment(picture, author, "text komentare", "Titulek komentare", LocalDateTime.now());
         comment.setAuthor(author);
-        comment.setPicture(p3);
+        comment.setPicture(picture);
+
+        assertTrue("Comment creation should return true", commentService.create(comment) > 0 );
 
         List<Comment> comments = commentService.getAllComments();
-        assertEquals("Should be one Comment in database.", comments.size(), commentService.create(comment) - 1);
+        assertEquals("Should be one comment in database.", 1, comments.size());
+    }
+
+    @Test
+    public void testCommentExists() {
+        commentService.deleteComments();
+
+        Author author = new Author("Franta JPA testP", LocalDateTime.now());
+        author.setAuthorId(authorService.create(author));
+
+        Picture picture = new Picture(author, "http://url.cz", "test JPA", LocalDateTime.now());
+        picture.setPictureId(pictureService.create(picture));
+
+        Comment comment = new Comment(picture, author, "text komentare", "Titulek komentare", LocalDateTime.now());
+        commentService.create(comment);
+
+        assertTrue("Comment should exist with id 1", commentService.exists(comment.getCommentId()));
+        assertFalse("Comment should not exist", commentService.exists(666));
+    }
+
+    @Test
+    public void testDeleteComment() throws SQLException {
+
+        commentService.deleteComments();
+        Author author = new Author("Franta JPA testC", LocalDateTime.now());
+        Picture picture = new Picture(author, "http://url.cz", "pokus 1", LocalDateTime.now());
+
+        int authorKey = authorService.create(author);
+        int pictureKey = pictureService.create(picture);
+
+        Comment comment = new Comment(picture, author, "text komentare", "Titulek komentare", LocalDateTime.now());
+        Comment comment1 = new Comment(picture, author, "text komentare", "Titulek komentare", LocalDateTime.now());
+        Comment comment2 = new Comment(picture, author, "text komentare", "Titulek komentare", LocalDateTime.now());
+        Comment comment3 = new Comment(picture, author, "text komentare", "Titulek komentare", LocalDateTime.now());
+
+        commentService.create(comment);
+        commentService.create(comment1);
+        commentService.create(comment2);
+        commentService.create(comment3);
+
+        List<Comment> comments = commentService.getAllComments();
+        assertEquals("Should be four comments.", 4, comments.size());
+
+        commentService.deleteComment(comments.get(0));
+        commentService.deleteComment(comments.get(1));
+
+        comments = commentService.getAllComments();
+        assertEquals("Should be two commets.", 2, comments.size());
 
     }
 
     @Test
-    public void Test_addLike() {
+    public void testAddLike() throws SQLException {
+
+
+        Author author = new Author("Franta JPA testC", LocalDateTime.now());
+        Picture picture = new Picture(author, "http://url.cz", "pokus 1", LocalDateTime.now());
+
+        int authorKey = authorService.create(author);
+        int pictureKey = pictureService.create(picture);
+
+        Comment comment = new Comment(picture, author, "text komentare JPA", "Titulek komentare", LocalDateTime.now());
+        comment.setAuthor(author);
+        comment.setPicture(picture);
+
+        int key = commentService.create(comment);
 
         List<Comment> comments = commentService.getAllComments();
 
-        int lastComment = comments.get(comments.size()-1).getCommentId();
         int nLike = comments.get(comments.size()-1).getNlike();
-        LocalDateTime lastUpdate = comments.get(comments.size()-1).getLastUpdate();
-
-        commentService.incrementNLike(lastComment);
-
-        Comment c = commentService.getComment(lastComment);
-
-        assertEquals("Comment.getNlike() Should be nLike + 1.", nLike + 1, c.getNlike());
-        assertNotEquals("Comment.getNlike() Should be nLike + 1.", lastUpdate, c.getLastUpdate());
-
-    }
-
-    @Test
-    public void Test_addDislike() {
-
-        List<Comment> comments = commentService.getAllComments();
-
-        int lastComment = comments.get(comments.size()-1).getCommentId();
         int nDislike = comments.get(comments.size()-1).getNdislike();
         LocalDateTime lastUpdate = comments.get(comments.size()-1).getLastUpdate();
 
-        commentService.incrementNDislike(lastComment);
+        commentService.incrementNLike(key);
 
-        Comment c = commentService.getComment(lastComment);
+        Comment c = commentService.getAllComments().get(comments.size()-1);
 
-        assertEquals("Comment.getNdislike() Should be nDislike + 1.", nDislike + 1, c.getNdislike());
-        assertNotEquals("Comment.getNlike() Should be nLike + 1.", lastUpdate, c.getLastUpdate());
+        assertEquals("obr.getNlike() Should be nLike + 1.", nLike + 1, c.getNlike());
+        assertNotEquals("obr.getNlike() Should be nLike + 1.", lastUpdate, c.getLastUpdate());
+
+    }
+
+    @Test
+    public void testAddDislike() throws SQLException {
+
+
+        Author author = new Author("Franta JPA testC", LocalDateTime.now());
+        Picture picture = new Picture(author, "http://url.cz", "pokus 1", LocalDateTime.now());
+
+        int authorKey = authorService.create(author);
+        int pictureKey = pictureService.create(picture);
+
+        Comment comment = new Comment(picture, author, "text komentare", "Titulek komentare", LocalDateTime.now());
+        comment.setAuthor(author);
+        comment.setPicture(picture);
+
+        int key = commentService.create(comment);
+
+        List<Comment> comments = commentService.getAllComments();
+
+        int nLike = comments.get(comments.size()-1).getNlike();
+        int nDislike = comments.get(comments.size()-1).getNdislike();
+        LocalDateTime lastUpdate = comments.get(comments.size()-1).getLastUpdate();
+
+        commentService.incrementNDislike(key);
+
+        Comment c = commentService.getAllComments().get(comments.size()-1);
+
+        assertEquals("obr.getNdislike() Should be nDislike + 1.", nDislike + 1, c.getNdislike());
+        assertNotEquals("obr.getNlike() Should be nLike + 1.", lastUpdate, c.getLastUpdate());
 
     }
 

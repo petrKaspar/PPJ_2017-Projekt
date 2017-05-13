@@ -14,7 +14,6 @@ import java.util.List;
  * Created by Petr on 10.04.2017.
  */
 @Service
-//@Transactional
 public class CommentService {
 
     @Autowired
@@ -23,6 +22,10 @@ public class CommentService {
     public int create(Comment comment){
         Comment newComment = commentRepository.save(comment);
         return newComment.getCommentId();
+    }
+
+    public boolean exists(int id){
+        return commentRepository.exists(id);
     }
 
     public List<Comment> getAllComments() {
@@ -45,5 +48,12 @@ public class CommentService {
         return true;
     }
 
+    public void deleteComments(){
+        commentRepository.deleteAll();
+    }
+
+    public void deleteComment(Comment comment) {
+        commentRepository.delete(comment);
+    }
 
 }

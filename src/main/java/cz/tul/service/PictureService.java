@@ -14,9 +14,7 @@ import java.util.List;
  * Created by Petr on 09.04.2017.
  */
 @Service
-//@Transactional
 public class PictureService {
-
 
     @Autowired
     private PictureRepository pictureRepository;
@@ -34,6 +32,10 @@ public class PictureService {
         return pictureRepository.findOne(id);
     }
 
+    public boolean exists(int id){
+        return pictureRepository.exists(id);
+    }
+
     public boolean incrementNLike(int id) {
         LocalDateTime localDateTime = LocalDateTime.now();
         pictureRepository.incrementNLike(id, LocalDateTime.now());
@@ -44,6 +46,14 @@ public class PictureService {
         LocalDateTime localDateTime = LocalDateTime.now();
         pictureRepository.incrementNDisLike(id, LocalDateTime.now());
         return true;
+    }
+
+    public void deletePictures(){
+        pictureRepository.deleteAll();
+    }
+
+    public void deletePicture(Picture picture) {
+        pictureRepository.delete(picture);
     }
 
 }

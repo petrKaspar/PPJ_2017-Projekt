@@ -5,7 +5,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-//import java.util.LocalDateTime;
+
 
 /**
  * Created by Petr on 03.04.2017.
@@ -19,20 +19,17 @@ public class Picture {
     @Column(name = "pictureId")
     private int pictureId;
 
-//    private int authorId;
-
     private String url;
     private String title;
+
     private LocalDateTime created;
 
-    @Column(name="lastUpdate")
     private LocalDateTime lastUpdate;
 
     private String tags;
 
     private int nlike;
     private int ndislike;
-
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -71,7 +68,7 @@ public class Picture {
         this.url = url;
     }
 
-    public void settitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -99,7 +96,7 @@ public class Picture {
         return url;
     }
 
-    public String gettitle() {
+    public String getTitle() {
         return title;
     }
 
