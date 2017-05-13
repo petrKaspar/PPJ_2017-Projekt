@@ -37,12 +37,10 @@ public class CommentService {
     }
 
     public int incrementNLike(int id) {
-        LocalDateTime localDateTime = LocalDateTime.now();
         return commentRepository.incrementNLike(id, LocalDateTime.now());
     }
 
     public int incrementNDislike(int id) {
-        LocalDateTime localDateTime = LocalDateTime.now();
         return commentRepository.incrementNDisLike(id, LocalDateTime.now());
     }
 

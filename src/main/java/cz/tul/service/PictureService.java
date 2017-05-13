@@ -35,12 +35,10 @@ public class PictureService {
     }
 
     public int incrementNLike(int id) {
-        LocalDateTime localDateTime = LocalDateTime.now();
         return pictureRepository.incrementNLike(id, LocalDateTime.now());
     }
 
     public int incrementNDislike(int id) {
-        LocalDateTime localDateTime = LocalDateTime.now();
         return pictureRepository.incrementNDisLike(id, LocalDateTime.now());
     }
 

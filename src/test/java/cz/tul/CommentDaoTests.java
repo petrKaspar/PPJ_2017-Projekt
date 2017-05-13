@@ -34,9 +34,6 @@ public class CommentDaoTests {
     @Autowired
     private CommentService commentService;
 
-
-
-
     @Test
     public void testCreateComment() throws SQLException {
 
@@ -84,8 +81,8 @@ public class CommentDaoTests {
         Author author = new Author("Franta JPA testC", LocalDateTime.now());
         Picture picture = new Picture(author, "http://url.cz", "pokus 1", LocalDateTime.now());
 
-        int authorKey = authorService.create(author);
-        int pictureKey = pictureService.create(picture);
+        authorService.create(author);
+        pictureService.create(picture);
 
         Comment comment = new Comment(picture, author, "text komentare", "Titulek komentare", LocalDateTime.now());
         Comment comment1 = new Comment(picture, author, "text komentare", "Titulek komentare", LocalDateTime.now());
@@ -115,8 +112,8 @@ public class CommentDaoTests {
         Author author = new Author("Franta JPA testC", LocalDateTime.now());
         Picture picture = new Picture(author, "http://url.cz", "pokus 1", LocalDateTime.now());
 
-        int authorKey = authorService.create(author);
-        int pictureKey = pictureService.create(picture);
+        authorService.create(author);
+        pictureService.create(picture);
 
         Comment comment = new Comment(picture, author, "text komentare JPA", "Titulek komentare", LocalDateTime.now());
         comment.setAuthor(author);
@@ -127,7 +124,6 @@ public class CommentDaoTests {
         List<Comment> comments = commentService.getAllComments();
 
         int nLike = comments.get(comments.size()-1).getNlike();
-        int nDislike = comments.get(comments.size()-1).getNdislike();
         LocalDateTime lastUpdate = comments.get(comments.size()-1).getLastUpdate();
 
         commentService.incrementNLike(key);
@@ -146,8 +142,8 @@ public class CommentDaoTests {
         Author author = new Author("Franta JPA testC", LocalDateTime.now());
         Picture picture = new Picture(author, "http://url.cz", "pokus 1", LocalDateTime.now());
 
-        int authorKey = authorService.create(author);
-        int pictureKey = pictureService.create(picture);
+        authorService.create(author);
+        pictureService.create(picture);
 
         Comment comment = new Comment(picture, author, "text komentare", "Titulek komentare", LocalDateTime.now());
         comment.setAuthor(author);
@@ -157,7 +153,6 @@ public class CommentDaoTests {
 
         List<Comment> comments = commentService.getAllComments();
 
-        int nLike = comments.get(comments.size()-1).getNlike();
         int nDislike = comments.get(comments.size()-1).getNdislike();
         LocalDateTime lastUpdate = comments.get(comments.size()-1).getLastUpdate();
 

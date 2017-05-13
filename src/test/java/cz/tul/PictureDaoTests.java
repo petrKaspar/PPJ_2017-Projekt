@@ -40,7 +40,7 @@ public class PictureDaoTests {
         author.setAuthorId(authorKey);
 
         Picture picture = new Picture(author, "http://url.cz", "test JPA", LocalDateTime.now());
-        int pictureKey = pictureService.create(picture);
+        pictureService.create(picture);
 
         List<Picture> pictures = pictureService.getAllPictures();
         assertEquals("Should be one comment in database.", 1, pictures.size());
@@ -65,7 +65,7 @@ public class PictureDaoTests {
 
         pictureService.deletePictures();
         Author author = new Author("Franta JPA testP", LocalDateTime.now());
-        int authorKey = authorService.create(author);
+        authorService.create(author);
 
         Picture picture  = new Picture(author, "http://url.cz", "pokus 1", LocalDateTime.now());
         Picture picture1 = new Picture(author, "http://url.cz", "pokus 2", LocalDateTime.now());
@@ -92,7 +92,7 @@ public class PictureDaoTests {
         pictureService.deletePictures();
 
         Author author = new Author("Franta JPA testP", LocalDateTime.now());
-        int authorKey = authorService.create(author);
+        authorService.create(author);
 
         Picture picture = new Picture(author, "http://url.cz", "pokus 1", LocalDateTime.now());
         int pictureKey = pictureService.create(picture);
@@ -117,7 +117,7 @@ public class PictureDaoTests {
         pictureService.deletePictures();
 
         Author author = new Author("Franta JPA testP", LocalDateTime.now());
-        int authorKey = authorService.create(author);
+        authorService.create(author);
 
         Picture picture = new Picture(author, "http://url.cz", "pokus 1", LocalDateTime.now());
         int pictureKey = pictureService.create(picture);
