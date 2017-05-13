@@ -22,8 +22,7 @@ public class CommentDao {
 
     @Autowired
     private NamedParameterJdbcOperations jdbc;
-
-    private OffsetDateTime odt = OffsetDateTime.now();
+    
     public int create(Comment comment) throws SQLException {
 
         BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(comment);

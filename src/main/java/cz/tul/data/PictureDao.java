@@ -27,7 +27,6 @@ public class PictureDao {
     @Autowired
     private NamedParameterJdbcOperations jdbc;
 
-    private OffsetDateTime odt = OffsetDateTime.now();;
     public int create(Picture picture) throws SQLException {
 
         BeanPropertySqlParameterSource params = new BeanPropertySqlParameterSource(
