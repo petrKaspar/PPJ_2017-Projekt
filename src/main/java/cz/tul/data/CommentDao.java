@@ -33,25 +33,17 @@ public class CommentDao {
     public Session session() {
         return sessionFactory.getCurrentSession();
     }
-    private OffsetDateTime odt;
-    private LocalDateTime ldt = LocalDateTime.now();
 
     public int create(Comment comment){
         return (int) session().save(comment);
     }
 
     public int incrementNLike(int id) {
-        odt = OffsetDateTime.now();
         Comment comment = (Comment) session().load(Comment.class, id);
         int nLike = comment.getNlike();
 
         comment.setNlike(nLike + 1);
         comment.setLastUpdate(new Date());
-
-        System.out.println("---------------------------------");
-        System.out.println(session().save(comment));
-        System.out.println((int) session().save(comment));
-        System.out.println("---------------------------------");
 
         int updatedKey = (int) session().save(comment);
 
@@ -59,7 +51,6 @@ public class CommentDao {
     }
 
     public int incrementNDislike(int id) {
-        odt = OffsetDateTime.now();
         Comment comment = (Comment) session().load(Comment.class, id);
         int nDislike = comment.getNdislike();
 
