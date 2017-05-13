@@ -4,10 +4,8 @@ import cz.tul.data.Picture;
 import cz.tul.repositories.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,16 +34,14 @@ public class PictureService {
         return pictureRepository.exists(id);
     }
 
-    public boolean incrementNLike(int id) {
+    public int incrementNLike(int id) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        pictureRepository.incrementNLike(id, LocalDateTime.now());
-        return true;
+        return pictureRepository.incrementNLike(id, LocalDateTime.now());
     }
 
-    public boolean incrementNDislike(int id) {
+    public int incrementNDislike(int id) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        pictureRepository.incrementNDisLike(id, LocalDateTime.now());
-        return true;
+        return pictureRepository.incrementNDisLike(id, LocalDateTime.now());
     }
 
     public void deletePictures(){

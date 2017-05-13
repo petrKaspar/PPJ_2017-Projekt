@@ -36,16 +36,14 @@ public class CommentService {
         return commentRepository.findOne(id);
     }
 
-    public boolean incrementNLike(int id) {
+    public int incrementNLike(int id) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        commentRepository.incrementNLike(id, LocalDateTime.now());
-        return true;
+        return commentRepository.incrementNLike(id, LocalDateTime.now());
     }
 
-    public boolean incrementNDislike(int id) {
+    public int incrementNDislike(int id) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        commentRepository.incrementNDisLike(id, LocalDateTime.now());
-        return true;
+        return commentRepository.incrementNDisLike(id, LocalDateTime.now());
     }
 
     public void deleteComments(){
