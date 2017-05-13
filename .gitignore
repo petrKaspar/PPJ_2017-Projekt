@@ -1,7 +1,6 @@
 .idea
-#/src/main/resources/*.properties
-#/src/test/resources/*.properties
 developDatabase
+database
 *.log
 target
 *.iml

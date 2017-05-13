@@ -42,7 +42,7 @@ public class PictureDao {
         return (int) session().save(picture);
     }
 
-    public boolean incrementNLike(int id) {
+    public int incrementNLike(int id) {
         odt = OffsetDateTime.now();
         Picture picture = (Picture) session().load(Picture.class, id);
         int nLike = picture.getNlike();
@@ -52,10 +52,10 @@ public class PictureDao {
 
         int updatedKey = (int) session().save(picture);
 
-        return true;
+        return updatedKey;
     }
 
-    public boolean incrementNDislike(int id) {
+    public int incrementNDislike(int id) {
         odt = OffsetDateTime.now();
         Picture picture = (Picture) session().load(Picture.class, id);
         int nDislike = picture.getNdislike();
@@ -65,7 +65,7 @@ public class PictureDao {
 
         int updatedKey = (int) session().save(picture);
 
-        return true;
+        return updatedKey;
 
     }
 

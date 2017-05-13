@@ -40,7 +40,7 @@ public class CommentDao {
         return (int) session().save(comment);
     }
 
-    public boolean incrementNLike(int id) {
+    public int incrementNLike(int id) {
         odt = OffsetDateTime.now();
         Comment comment = (Comment) session().load(Comment.class, id);
         int nLike = comment.getNlike();
@@ -48,12 +48,17 @@ public class CommentDao {
         comment.setNlike(nLike + 1);
         comment.setLastUpdate(new Date());
 
+        System.out.println("---------------------------------");
+        System.out.println(session().save(comment));
+        System.out.println((int) session().save(comment));
+        System.out.println("---------------------------------");
+
         int updatedKey = (int) session().save(comment);
 
-        return true;
+        return updatedKey;
     }
 
-    public boolean incrementNDislike(int id) {
+    public int incrementNDislike(int id) {
         odt = OffsetDateTime.now();
         Comment comment = (Comment) session().load(Comment.class, id);
         int nDislike = comment.getNdislike();
@@ -63,7 +68,7 @@ public class CommentDao {
 
         int updatedKey = (int) session().save(comment);
 
-        return true;
+        return updatedKey;
 
     }
 
