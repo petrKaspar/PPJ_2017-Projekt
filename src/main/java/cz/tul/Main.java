@@ -1,5 +1,6 @@
 package cz.tul;
 
+//import cz.tul.configurations.MainSpringConfiguration;
 import cz.tul.service.AuthorService;
 import cz.tul.service.PictureService;
 import org.hibernate.SessionFactory;
@@ -14,8 +15,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+//import org.springframework.web.WebApplicationInitializer;
+//import org.springframework.web.context.ContextLoaderListener;
+//import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+//import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.persistence.EntityManagerFactory;
+import javax.servlet.ServletContext;
+//import javax.servlet.ServletRegistration;
 
 @SpringBootApplication
 @EnableTransactionManagement

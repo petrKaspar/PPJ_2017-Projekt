@@ -11,6 +11,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @Import({
         PropertiesLoaderConfiguration.class,
         PersistenceConfiguration.class,
+        SpringRestConfiguration.class,
 })
 
 @ComponentScan("cz.tul.data")
