@@ -51,6 +51,12 @@ public class Picture {
         this.created = created;
     }
 
+    public Picture(Author author, String url, String title){
+        this.author = author;
+        this.url = url;
+        this.title = title;
+    }
+
     public Picture() {
     }
 

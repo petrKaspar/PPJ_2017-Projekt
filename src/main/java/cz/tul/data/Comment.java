@@ -54,6 +54,13 @@ public class Comment {
         this.created = created;
     }
 
+    public Comment(Picture picture, Author author, String commentText, String title) {
+        this.picture = picture;
+        this.author = author;
+        this.commentText = commentText;
+        this.title = title;
+    }
+
     public Comment() {
     }
 

@@ -20,6 +20,7 @@ public class Author {
 
     private String name;
 
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime registration;
 
     public Author(){    }
@@ -28,6 +29,11 @@ public class Author {
         this.name = name;
         this.registration = registration;
     }
+
+    public Author(String name) {
+        this.name = name;
+    }
+
 
     public String getName() {
         return name;

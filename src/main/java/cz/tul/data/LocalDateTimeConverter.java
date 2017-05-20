@@ -8,17 +8,17 @@ import java.time.LocalDateTime;
 /**
  * Created by Petr on 13.05.2017.
  */
-@Converter
+@Converter//(autoApply = true)
 public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime,Timestamp> {
 // pro pouziti prevodu casoveho formatu se v datovem modelu pouzije anotace "@Convert(converter = LocalDateTimeConverter.class)"
 
     @Override
     public Timestamp convertToDatabaseColumn(LocalDateTime dateTime) {
-        return Timestamp.valueOf(dateTime);
+        return (dateTime == null ? null : Timestamp.valueOf(dateTime));
     }
 
     @Override
     public LocalDateTime convertToEntityAttribute(Timestamp timestamp) {
-        return timestamp.toLocalDateTime();
+        return (timestamp == null ? null : timestamp.toLocalDateTime());
     }
 }
