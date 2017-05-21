@@ -15,16 +15,16 @@ import java.util.List;
  * Created by Petr on 20.05.2017.
  */
 
-//@RestController
+@RestController
 public class AuthorsController {
 
-//    @Autowired
-//    private AuthorService authorService;
-//
-//    @RequestMapping(value = "/authors", method = RequestMethod.GET)
-//    public ResponseEntity<List<Author>> showAuthors() {
-//        List<Author> authors = authorService.getAllAuthors();
-//        return new ResponseEntity<>(authors, HttpStatus.OK);
-//    }
+    @Autowired
+    private AuthorService authorService;
+
+    @RequestMapping(value = "/authors", method = RequestMethod.GET)
+    public ResponseEntity<List<Author>> showAuthors() {
+        List<Author> authors = authorService.getAllAuthors();
+        return new ResponseEntity<>(authors, HttpStatus.OK);
+    }
 
 }
