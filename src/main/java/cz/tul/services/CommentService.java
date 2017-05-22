@@ -1,13 +1,11 @@
 package cz.tul.service;
 
 import cz.tul.data.Comment;
-import cz.tul.data.Picture;
 import cz.tul.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
