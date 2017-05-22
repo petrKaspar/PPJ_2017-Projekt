@@ -7,7 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Created by Petr on 27.04.2017.
  */
-@RepositoryRestResource(collectionResourceRel = "authors", path = "authors")
+//@RepositoryRestResource(collectionResourceRel = "authors", path = "authors")
+@Repository
 public interface AuthorRepository extends CrudRepository<Author, Integer>{
 
 }

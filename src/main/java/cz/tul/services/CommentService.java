@@ -1,4 +1,4 @@
-package cz.tul.service;
+package cz.tul.services;
 
 import cz.tul.data.Comment;
 import cz.tul.repositories.CommentRepository;

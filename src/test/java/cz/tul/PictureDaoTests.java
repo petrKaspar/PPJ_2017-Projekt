@@ -1,8 +1,8 @@
 package cz.tul;
 
 import cz.tul.data.*;
-import cz.tul.service.AuthorService;
-import cz.tul.service.PictureService;
+import cz.tul.services.AuthorService;
+import cz.tul.services.PictureService;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;

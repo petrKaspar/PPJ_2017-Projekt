@@ -1,7 +1,7 @@
 package cz.tul;
 
 import cz.tul.data.Author;
-import cz.tul.service.AuthorService;
+import cz.tul.services.AuthorService;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
