@@ -16,6 +16,7 @@ import java.util.Date;
  */
 
 @Repository
+@Transactional
 public interface PictureRepository extends CrudRepository<Picture, Integer> {
 
     @Modifying

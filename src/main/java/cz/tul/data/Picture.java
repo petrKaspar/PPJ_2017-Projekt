@@ -22,8 +22,10 @@ public class Picture {
     private String url;
     private String title;
 
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime created;
 
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime lastUpdate;
 
     private String tags;

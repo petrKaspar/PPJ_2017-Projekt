@@ -6,10 +6,7 @@ import cz.tul.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +33,16 @@ public class AuthorsController {
         } else {
             authorService.create(author);
             return new ResponseEntity<>(author, HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = ServerApi.AUTHOR_PATH, method = RequestMethod.GET)
+    public ResponseEntity<Author> getAuthor(@PathVariable("id") int id) {
+        if (authorService.exists(id)) {
+            Author author = authorService.getAuthor(id);
+            return new ResponseEntity<>(author, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
