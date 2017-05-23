@@ -1,14 +1,12 @@
 package cz.tul.controllers;
 
 import cz.tul.client.ServerApi;
-import cz.tul.data.Author;
 import cz.tul.data.Picture;
 import cz.tul.services.AuthorService;
 import cz.tul.services.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,6 +45,38 @@ public class PictureController {
             return new ResponseEntity<>(picture, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = ServerApi.PICTURE_LIKE_PATH, method = RequestMethod.GET)
+    public ResponseEntity<Picture> addLike(@PathVariable("id") int id) {
+        if (pictureService.exists(id)) {
+            pictureService.incrementNLike(id);
+            Picture picture = pictureService.getPicture(id);
+            return new ResponseEntity<>(picture, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = ServerApi.PICTURE_DISLIKE_PATH, method = RequestMethod.GET)
+    public ResponseEntity<Picture> addDisike(@PathVariable("id") int id) {
+        if (pictureService.exists(id)) {
+            pictureService.incrementNDislike(id);
+            Picture picture = pictureService.getPicture(id);
+            return new ResponseEntity<>(picture, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = ServerApi.PICTURE_PATH, method = RequestMethod.DELETE)
+    public ResponseEntity deletePicture (@PathVariable("id") int id) {
+        if (pictureService.exists(id)) {
+            pictureService.deletePicture(pictureService.getPicture(id));
+            return new ResponseEntity("The picture with id:"+id+" was successfully deleted!", HttpStatus.OK);
+        } else {
+            return new ResponseEntity("The picture with id:"+id+" does not exist!", HttpStatus.NOT_FOUND);
         }
     }
 

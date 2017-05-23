@@ -2,7 +2,6 @@ package cz.tul.controllers;
 
 import cz.tul.client.ServerApi;
 import cz.tul.data.Comment;
-import cz.tul.data.Picture;
 import cz.tul.services.AuthorService;
 import cz.tul.services.CommentService;
 import cz.tul.services.PictureService;
@@ -51,6 +50,38 @@ public class CommentController {
             return new ResponseEntity<>(comment, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = ServerApi.COMMENT_LIKE_PATH, method = RequestMethod.GET)
+    public ResponseEntity<Comment> addLike(@PathVariable("id") int id) {
+        if (commentService.exists(id)) {
+            commentService.incrementNLike(id);
+            Comment comment = commentService.getComment(id);
+            return new ResponseEntity<>(comment, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = ServerApi.COMMENT_DISLIKE_PATH, method = RequestMethod.GET)
+    public ResponseEntity<Comment> addDislike(@PathVariable("id") int id) {
+        if (commentService.exists(id)) {
+            commentService.incrementNDislike(id);
+            Comment comment = commentService.getComment(id);
+            return new ResponseEntity<>(comment, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = ServerApi.COMMENT_PATH, method = RequestMethod.DELETE)
+    public ResponseEntity deleteComment (@PathVariable("id") int id) {
+        if (commentService.exists(id)) {
+            commentService.deleteComment(commentService.getComment(id));
+            return new ResponseEntity("The comment with id:"+id+" was successfully deleted!", HttpStatus.OK);
+        } else {
+            return new ResponseEntity("The comment with id:"+id+" does not exist!", HttpStatus.NOT_FOUND);
         }
     }
 

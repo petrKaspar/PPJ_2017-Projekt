@@ -46,4 +46,14 @@ public class AuthorsController {
         }
     }
 
+    @RequestMapping(value = ServerApi.AUTHOR_PATH, method = RequestMethod.DELETE)
+    public ResponseEntity deleteAuthor(@PathVariable("id") int id) {
+        if (authorService.exists(id)) {
+            authorService.deleteAuthor(authorService.getAuthor(id));
+                return new ResponseEntity("The author with id:"+id+" was successfully deleted!", HttpStatus.OK);
+        } else {
+            return new ResponseEntity("The author with id:"+id+" does not exist!", HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

@@ -22,12 +22,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {SpringBootWebApplication.class})
+@SpringApplicationConfiguration(classes = {SpringBootRestApplication.class})
 @ActiveProfiles({"test"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AuthorDaoTests {
 
-    private static final Logger log = LoggerFactory.getLogger(SpringBootWebApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(SpringBootRestApplication.class);
 
     @Autowired
     private AuthorService authorService;
