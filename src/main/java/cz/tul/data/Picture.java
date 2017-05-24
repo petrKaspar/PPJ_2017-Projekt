@@ -1,10 +1,13 @@
 package cz.tul.data;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -15,7 +18,7 @@ import java.time.LocalDateTime;
 public class Picture {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "pictureId")
     private int pictureId;
 
@@ -29,6 +32,14 @@ public class Picture {
     private LocalDateTime lastUpdate;
 
     private String tags;
+
+                                                // marge pro propojeni s tagama a refresh pomaha pri mazani
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(name = "picturesTags",
+            joinColumns = @JoinColumn(name = "pictureId"),
+            inverseJoinColumns = @JoinColumn(name = "tagId"))
+    @JsonManagedReference
+    private Set<Tag> tagSet = new HashSet<Tag>();
 
     private int nlike;
     private int ndislike;
@@ -44,6 +55,14 @@ public class Picture {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public Picture(Author author, String url, String title, LocalDateTime created, Set<Tag> tagSet){
+        this.author = author;
+        this.url = url;
+        this.title = title;
+        this.created = created;
+        this.tagSet = tagSet;
     }
 
     public Picture(Author author, String url, String title, LocalDateTime created){
@@ -130,6 +149,14 @@ public class Picture {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+      public Set<Tag> getTagSet() {
+        return tagSet;
+    }
+
+    public void setTagSet(Set<Tag> tagSet) {
+        this.tagSet = tagSet;
     }
 
     @Override

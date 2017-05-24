@@ -14,6 +14,9 @@ public interface ServerApi {
 	public static final String AUTHORS_PATH = "/authors";
 	public static final String AUTHOR_PATH = AUTHORS_PATH + "/{id}";
 
+	public static final String TAGS_PATH = "/tags";
+	public static final String TAG_PATH = TAGS_PATH+ "/{id}";
+
 	public static final String PICTURES_PATH = "/pictures";
 	public static final String PICTURE_PATH = PICTURES_PATH + "/{id}";
 	public static final String PICTURE_LIKE_PATH = PICTURE_PATH + "/addLike";
