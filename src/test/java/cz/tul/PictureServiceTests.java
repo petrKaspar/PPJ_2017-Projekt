@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 @SpringApplicationConfiguration(classes = {SpringBootRestApplication.class})
 @ActiveProfiles({"test"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class PictureDaoTests {
+public class PictureServiceTests {
 
     @Autowired
     private PictureService pictureService;

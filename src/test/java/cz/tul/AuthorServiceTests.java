@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 @SpringApplicationConfiguration(classes = {SpringBootRestApplication.class})
 @ActiveProfiles({"test"})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AuthorDaoTests {
+public class AuthorServiceTests {
 
     private static final Logger log = LoggerFactory.getLogger(SpringBootRestApplication.class);
 
