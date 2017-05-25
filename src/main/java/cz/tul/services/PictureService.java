@@ -1,6 +1,8 @@
 package cz.tul.services;
 
+import cz.tul.data.Author;
 import cz.tul.data.Picture;
+import cz.tul.data.Tag;
 import cz.tul.repositories.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,21 @@ public class PictureService {
 
     public int incrementNDislike(int id) {
         return pictureRepository.incrementNDisLike(id, LocalDateTime.now());
+    }
+
+    public List<Picture> getPicturesByTitle(String title){
+        List<Picture> pictures = pictureRepository.findByTitleContaining(title);
+        return pictures;
+    }
+
+    public List<Picture> getPicturesByAuthor(Author author){
+        List<Picture> pictures = pictureRepository.findByAuthor(author);
+        return pictures;
+    }
+
+    public List<Picture> getPicturesByTag(Tag tag){
+        List<Picture> pictures = pictureRepository.findByTagSet(tag);
+        return pictures;
     }
 
     public void deletePictures(){
