@@ -1,9 +1,12 @@
 package cz.tul;
 
+import cz.tul.client.ImageStatus;
+import cz.tul.client.ServerApi;
 import cz.tul.data.*;
 import cz.tul.services.AuthorService;
 import cz.tul.services.PictureService;
 import cz.tul.services.TagService;
+import org.apache.commons.io.IOUtils;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,9 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import retrofit.RestAdapter;
+import retrofit.client.Response;
+import retrofit.mime.TypedFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -147,6 +157,31 @@ public class PictureServiceTests {
         assertEquals("obr.getNlike() Should be nLike + 1.", nDislike + 1, p.getNdislike());
         assertNotEquals("obr.getNlike() Should be nLike + 1.", lastUpdate, p.getLastUpdate());
 
+    }
+
+    private final String TEST_URL = "http://localhost:8080";
+
+    private File testImageData = new File("src/test/resources/testLEGO1.jpg");
+    private String filename = "lego1";
+
+    private ServerApi insecureService = new RestAdapter.Builder()
+            .setEndpoint(TEST_URL).setLogLevel(RestAdapter.LogLevel.FULL).build().create(ServerApi.class);
+
+    @Test
+    public void uploadImageData() throws Exception {
+        ImageStatus status = insecureService.uploadImage(filename, new TypedFile("image/jpeg", testImageData));
+        assertEquals(ImageStatus.ImageState.READY, status.getState());
+    }
+
+    @Test
+    public void downloadImageData() throws Exception {
+        Response response = insecureService.downloadImage(filename);
+        assertEquals(200, response.getStatus());
+
+        InputStream imageData = response.getBody().in();
+        byte[] originalFile = IOUtils.toByteArray(new FileInputStream(testImageData));
+        byte[] retrievedData = IOUtils.toByteArray(imageData);
+        assertTrue(Arrays.equals(originalFile, retrievedData));
     }
 
     @Test

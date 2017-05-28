@@ -3,6 +3,7 @@ package cz.tul.data;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,7 @@ public class Tag implements java.io.Serializable {
 
     @Id
     @Column(name="tagId")
+    @Size(max=16)
     private String tag;
 
     @ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.ALL})
